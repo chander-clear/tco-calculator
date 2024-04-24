@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lightbits Calculator</title>
+    <!--Load the AJAX API-->
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      main {
+        position: relative;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      .container {
+        max-width: 1300px;
+        width: 100%;
+        padding: 0 1.5rem;
+        margin: 0 auto;
+      }
+
+      .btn {
+        cursor: pointer;
+        font-family: "Lato", Sans-serif;
+        font-size: 16px;
+        line-height: 1.2em;
+        letter-spacing: 1px;
+        border-style: solid;
+        border-width: 2px 2px 2px 2px;
+        border-color: #5f305e;
+        padding: 10px 15px 10px 15px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .btn-default {
+        color: #fff;
+        background-color: #5f305e;
+        margin-top: 1.5rem;
+      }
+
+      .btn-default:hover {
+        background-color: transparent;
+        color: #5f305e;
+      }
+
+      .btn-transparent {
+        color: #5f305e;
+        margin-top: 1.5rem;
+      }
+
+      .btn-transparent:hover {
+        color: #fff;
+        background-color: #5f305e;
+      }
+
+      .row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      .col-two {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+
+      .intro-block {
+        text-align: center;
+      }
+
+      .intro-block h2 {
+        margin-bottom: 1.5rem;
+      }
+
+      .intro-block p {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .calculation {
+        text-align: center;
+      }
+
+      .calculation h2:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      .calculator-form {
+        padding: 2rem 0;
+      }
+
+      .form-group-input input {
+        color: #000;
+        font-size: 1rem;
+        line-height: 1;
+        width: 100%;
+        height: 3rem;
+        padding: 0.5rem 0.8rem;
+      }
+
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        display: none;
+      }
+
+      .form-group:not(:first-child) {
+        margin-top: 1.5rem;
+      }
+
+      .btn-wrap a:not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      .form-group-input .btn-wrap .btn {
+        margin-top: 0;
+      }
+    </style>
+    <script type="text/javascript">
+      (function () {
+        document.addEventListener('DOMContentLoaded', function () {
+          var tcoCalculator = document.querySelector(".tco-calculator");
+          var provisionedCapacity = "";
+
+          const AMD_TB_PER_MONTH = 142.336;
+          const ULTRA_DISK_TB_PER_MONTH = 122.593;
+          const PREMIUM_SSD_TB_PER_MONTH = 82.944;
+
+          const AMD_MAX_READ_IOPS = 66000;
+          const ULTRA_DISK_MAX_READ_IOPS = 20000;
+          const PREMIUM_SSD_READ_IOPS = 15000;
+
+          const AMD_IOPS_MONTH = 0;
+          const ULTRA_DISK_IOPS_MONTH = 0.04964;
+          const PREMIUM_SSD_IOPS_MONTH = 0.0052;
+
+          const AMD_MBPS_MONTH = 0;
+          const ULTRA_DISK_MBPS_MONTH = 0.04964;
+          const PREMIUM_SSD_MBPS_MONTH = 0.0052;
+
+
+          if (!tcoCalculator) return;
+  
+          // Convert numeric to dollars currency format
+          function numberToDollars(num) {
+            var roundedNum = num > 0 ? parseFloat(num).toFixed(2) : num;
+            return (
+              "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
+          }
+  
+          // Convert negative numbers to positive numbers and limit max digits to 12 digits for number inputs
+          function getPositiveNumAndLimitMaxDigits(input) {
+            if (!!input.value) {
+              input.value = parseInt(
+                input.value.toLocaleString("fullwide", { useGrouping: false }),
+                10
+              );
+              input.value =
+                Math.abs(input.value) >= 0 ? Math.abs(input.value) : null;
+              input.value =
+                input.value.length > input.maxLength
+                  ? input.value.slice(0, input.maxLength)
+                  : input.value;
+            }
+  
+            return input.value;
+          }
+  
+          // Trigger event
+          function triggerEvent(el, evtType) {
+            if ("createEvent" in document) {
+              var evt = document.createEvent("HTMLEvents");
+              evt.initEvent(evtType, false, true);
+              el.dispatchEvent(evt);
+            } else {
+              el.fireEvent("on" + evtType);
+            }
+          }
+  
+          // Add, initialize and listen to input events in form
+          function initListeners() {
+            var tibInput = document.getElementById("tib-input");
+  
+            if (tibInput) {
+              tibInput.value = provisionedCapacity;
+  
+              tibInput.addEventListener("input", function () {
+                this.value = getPositiveNumAndLimitMaxDigits(this);
+  
+                provisionedCapacity = this.value;
+                console.log(this.value, 'test')
+              });
+            }
+          }
+  
+          initListeners();
+  
+          // get value on keydown Done
+          // convert into number Done
+          // calculate
+          // -
+
+        })
+      })();
+    </script>
+
+    <script type="text/javascript">
+      google.charts.load("current", { packages: ["corechart"] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ["Year", "Sales", "Expenses"],
+          ["2013", 1000, 400],
+          ["2014", 1170, 460],
+          ["2015", 660, 1120],
+          ["2016", 1030, 540],
+        ]);
+
+        var options = {
+          title: "Company Performance",
+          hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
+          vAxis: { minValue: 0 },
+        };
+
+        var chart = new google.visualization.AreaChart(
+          document.getElementById("chart_div")
+        );
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <section class="tco-calculator">
+        <div class="container">
+          <div class="intro-block">
+            <h2>See How Much You Can Save on Your Cloud Storage Costs</h2>
+            <p>
+              Native cloud storage on Azure can be up to 7x more expensive than
+              Lightbits. For performance-sensitive, large-scale workloads
+              Lightbits offers the fastest block storage on Azure today with
+              predictable low cost that will not bust your IT budget.
+            </p>
+          </div>
+          <div
+            class="calculator citrus-top-border aos-init aos-animate"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div class="calculator-form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-two">
+                    <div class="form-group-content">
+                      <h6 class="form-group-title">
+                        Provisioned Capacity (TiB)*
+                      </h6>
+                      <p>Select One:</p>
+                    </div>
+                  </div>
+                  <div class="col-two">
+                    <div class="form-group-input">
+                      <div class="btn-wrap">
+                        <span class="btn btn-default"> Ultra Disk </span>
+                        <span class="btn btn-default"> Premium SSD </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-two">
+                    <div class="form-group-content">
+                      <h6 class="form-group-title">
+                        Provisioned Capacity (TiB)*
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="col-two">
+                    <div class="form-group-input">
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          id="tib-input"
+                          aria-label="Provisioned Capacity"
+                          placeholder="Enter a number"
+                          maxlength="12"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="calculator-content">
+              <div class="calculation">
+                <h2>
+                  Your Total Cost Savings:
+                  <span class="calculation-cost" id="total-cost">298,735.864</span>
+                </h2>
+                <h2>
+                  Your Total Savings:
+                  <span class="calculation-percentage">84</span>
+                </h2>
+                <p>Lightbits outperforms Ultra Disk by approximately 3.3X</p>
+                <div class="btn-wrap">
+                  <a href="/" class="btn btn-default">Contact Sales</a>
+                  <a href="/" class="btn btn-transparent"
+                    >View Key Assumptions</a
+                  >
+                </div>
+              </div>
+              <div id="chart_div"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
