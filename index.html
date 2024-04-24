@@ -130,9 +130,10 @@
         margin-top: 0;
       }
     </style>
+
     <script type="text/javascript">
       (function () {
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener("DOMContentLoaded", function () {
           var tcoCalculator = document.querySelector(".tco-calculator");
           var provisionedCapacity = "";
 
@@ -152,17 +153,20 @@
           const ULTRA_DISK_MBPS_MONTH = 0.04964;
           const PREMIUM_SSD_MBPS_MONTH = 0.0052;
 
+          const MONTHS = 12;
 
           if (!tcoCalculator) return;
-  
+
+          var totalCostHtmlField = document.getElementById('total-cost');
+
           // Convert numeric to dollars currency format
           function numberToDollars(num) {
-            var roundedNum = num > 0 ? parseFloat(num).toFixed(2) : num;
+            var roundedNum = num > 0 ? parseFloat(num).toFixed(3) : num;
             return (
               "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             );
           }
-  
+
           // Convert negative numbers to positive numbers and limit max digits to 12 digits for number inputs
           function getPositiveNumAndLimitMaxDigits(input) {
             if (!!input.value) {
@@ -177,10 +181,10 @@
                   ? input.value.slice(0, input.maxLength)
                   : input.value;
             }
-  
+
             return input.value;
           }
-  
+
           // Trigger event
           function triggerEvent(el, evtType) {
             if ("createEvent" in document) {
@@ -191,31 +195,40 @@
               el.fireEvent("on" + evtType);
             }
           }
-  
+
           // Add, initialize and listen to input events in form
           function initListeners() {
             var tibInput = document.getElementById("tib-input");
-  
+
             if (tibInput) {
               tibInput.value = provisionedCapacity;
-  
+
               tibInput.addEventListener("input", function () {
                 this.value = getPositiveNumAndLimitMaxDigits(this);
-  
+
                 provisionedCapacity = this.value;
-                console.log(this.value, 'test')
               });
             }
           }
-  
+
+          // Calculate the Cost of Rental
+          function calculateAmdCost() {
+            amdCost = provisionedCapacity * AMD_TB_PER_MONTH * MONTHS;
+
+            if (totalCostHtmlField) {
+              totalCostHtmlField.textContent = numberToDollars(amdCost);
+            }
+
+            return amdCost;
+          }
+
           initListeners();
-  
+
           // get value on keydown Done
           // convert into number Done
           // calculate
-          // -
-
-        })
+          // - Amd for 1 year
+        });
       })();
     </script>
 
@@ -315,7 +328,9 @@
               <div class="calculation">
                 <h2>
                   Your Total Cost Savings:
-                  <span class="calculation-cost" id="total-cost">298,735.864</span>
+                  <span class="calculation-cost" id="total-cost"
+                    >298,735.864</span
+                  >
                 </h2>
                 <h2>
                   Your Total Savings:
