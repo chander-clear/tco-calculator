@@ -129,7 +129,8 @@
       .form-group-input .btn-wrap .btn {
         margin-top: 0;
       }
-      .video-overlay {
+
+      .content-modal {
         position: fixed;
         top: 0;
         left: 0;
@@ -153,12 +154,14 @@
         -o-transition: all 0.5s ease-in-out;
         transition: all 0.5s ease-in-out;
       }
+
       @media (max-width: 1279px) {
-        .video-overlay {
+        .content-modal {
           padding: 50px 0;
         }
       }
-      .video-overlay:before {
+
+      .content-modal:before {
         content: "";
         position: absolute;
         top: 0;
@@ -167,7 +170,8 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.8);
       }
-      .video-overlay__item {
+
+      .content-modal-item {
         max-width: 880px;
         width: 100%;
         height: 600px;
@@ -175,7 +179,8 @@
         margin: auto;
         position: relative;
       }
-      .video-overlay__item .content-wrap {
+
+      .content-modal__item .content-wrap {
         width: 100%;
         height: 100%;
         border-radius: 10px;
@@ -184,18 +189,22 @@
         border: 2px solid #e5e5d9;
         padding: 2.5rem;
       }
-      .video-overlay__item .content-wrap h3 {
+
+      .content-modal__item .content-wrap h3 {
         margin-bottom: 2rem;
       }
-      .video-overlay__item .content-wrap li {
+      
+      .content-modal__item .content-wrap li {
         margin-top: 1rem;
       }
-      .video-overlay .close-button {
+
+      .content-modal .close-button {
         position: absolute;
         right: 20px;
         top: 20px;
       }
-      .video-overlay--open {
+
+      .content-modal--open {
         opacity: 1;
         z-index: 100;
         visibility: visible;
@@ -295,6 +304,7 @@
 
             return amdCost;
           }
+          
           // Calculate the Cost of Rental
           function calculatePremiumSsdCost() {
             premiumSsdCost = (provisionedCapacity * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (provisionedCapacity * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH ) / 1024);
@@ -315,32 +325,6 @@
         });
       })();
     </script>
-
-    <!-- <script type="text/javascript">
-      google.charts.load("current", { packages: ["corechart"] });
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ["Year", "Sales", "Expenses"],
-          ["2013", 1000, 400],
-          ["2014", 1170, 460],
-          ["2015", 660, 1120],
-          ["2016", 1030, 540],
-        ]);
-
-        var options = {
-          title: "Company Performance",
-          hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
-          vAxis: { minValue: 0 },
-        };
-
-        var chart = new google.visualization.AreaChart(
-          document.getElementById("chart_div")
-        );
-        chart.draw(data, options);
-      }
-    </script> -->
   </head>
 
   <body>
@@ -431,10 +415,10 @@
           </div>
         </div>
       </section>
-      <section class="video-overlay">
+      <section class="content-modal">
         <div class="container">
             <span class="close-button"></span>
-            <div class="video-overlay__item">
+            <div class="content-modal-item">
                 <div class="content-wrap">
                     <h3>Key Assumptions</h3>
                     <ul>
