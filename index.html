@@ -30,7 +30,7 @@
         margin: 0 auto;
       }
 
-      .btn {
+      .btn-new {
         cursor: pointer;
         font-family: "Lato", Sans-serif;
         font-size: 16px;
@@ -45,23 +45,23 @@
         transition: all 0.3s ease-in-out;
       }
 
-      .btn-default {
+      .btn-new-default {
         color: #fff;
         background-color: #5f305e;
         margin-top: 1.5rem;
       }
 
-      .btn-default:hover {
+      .btn-new-default:hover {
         background-color: transparent;
         color: #5f305e;
       }
 
-      .btn-transparent {
+      .btn-new-transparent {
         color: #5f305e;
         margin-top: 1.5rem;
       }
 
-      .btn-transparent:hover {
+      .btn-new-transparent:hover {
         color: #fff;
         background-color: #5f305e;
       }
@@ -122,11 +122,11 @@
         margin-top: 1.5rem;
       }
 
-      .btn-wrap a:not(:last-child) {
+      .btn-new-wrap a:not(:last-child) {
         margin-right: 1rem;
       }
 
-      .form-group-input .btn-wrap .btn {
+      .form-group-input .btn-new-wrap .btn-new {
         margin-top: 0;
       }
 
@@ -219,7 +219,7 @@
           var provisionedCapacity = "";
 
           const AMD_TB_PER_MONTH = 142.336;
-          const ULTRA_DISK_TB_PER_MONTH = 122.593;
+          const ULTRA_DISK_TB_PER_MONTH = 122.59328;
           const PREMIUM_SSD_TB_PER_MONTH = 82.944;
 
           const AMD_MAX_READ_IOPS = 66000;
@@ -231,8 +231,10 @@
           const PREMIUM_SSD_IOPS_MONTH = 0.0052;
 
           const AMD_MBPS_MONTH = 0;
-          const ULTRA_DISK_MBPS_MONTH = 0.04964;
-          const PREMIUM_SSD_MBPS_MONTH = 0.0052;
+          const ULTRA_DISK_MBPS_MONTH = 0.34967;
+          const PREMIUM_SSD_MBPS_MONTH = 0.041;
+
+          const YEARLY_INFLAMATION_VALUE = (1 + 0.15);
 
           const MONTHS = 12;
 
@@ -296,18 +298,18 @@
 
           // Calculate the Cost of Rental
           function calculateUltraDiskCost() {
-            amdCost = (provisionedCapacity * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (provisionedCapacity * PREMIUM_SSD_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH ) / 1024);
+            ultraDiskCost = (provisionedCapacity * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (provisionedCapacity * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
 
             if (totalCostHtmlField) {
-              totalCostHtmlField.textContent = numberToDollars(amdCost);
+              totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
             }
 
-            return amdCost;
+            return ultraDiskCost;
           }
-          
+
           // Calculate the Cost of Rental
           function calculatePremiumSsdCost() {
-            premiumSsdCost = (provisionedCapacity * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (provisionedCapacity * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH ) / 1024);
+            premiumSsdCost = (provisionedCapacity * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (provisionedCapacity * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS ) / 1024);
 
             if (totalCostHtmlField) {
               totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
@@ -321,7 +323,11 @@
           // get value on keydown Done
           // convert into number Done
           // calculate
-          // - Amd for 1 year
+          // - Amd for 1 year Done
+          // - Ultra Disk 1 year Done
+          // - Premium SSD 1 year Done
+
+          // Calculate 5 years cost
         });
       })();
     </script>
@@ -358,9 +364,9 @@
                   </div>
                   <div class="col-two">
                     <div class="form-group-input">
-                      <div class="btn-wrap">
-                        <span class="btn btn-default">Ultra Disk </span>
-                        <span class="btn btn-default">Premium SSD </span>
+                      <div class="btn-new-wrap">
+                        <span class="btn-new btn-new-default">Ultra Disk </span>
+                        <span class="btn-new btn-new-default">Premium SSD </span>
                       </div>
                     </div>
                   </div>
@@ -403,9 +409,9 @@
                   <span class="calculation-percentage">84</span>
                 </h2>
                 <p>Lightbits outperforms Ultra Disk by approximately 3.3X</p>
-                <div class="btn-wrap">
-                  <a href="/" class="btn btn-default">Contact Sales</a>
-                  <a href="/" class="btn btn-transparent"
+                <div class="btn-new-wrap">
+                  <a href="/" class="btn-new btn-new-default">Contact Sales</a>
+                  <a href="/" class="btn-new btn-new-transparent"
                     >View Key Assumptions</a
                   >
                 </div>
