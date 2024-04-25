@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lightbits Calculator</title>
     <!--Load the AJAX API-->
-    <script
-      type="text/javascript"
-      src="https://www.gstatic.com/charts/loader.js"
-    ></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <style>
       * {
         box-sizing: border-box;
@@ -210,13 +207,22 @@
         visibility: visible;
       }
 
+      table {
+        text-align: left;
+        margin-top: 2rem;
+      }
+
+      table td, table th {
+        padding: 0.5rem;
+      }
+
     </style>
 
     <script type="text/javascript">
       (function () {
         document.addEventListener("DOMContentLoaded", function () {
           var tcoCalculator = document.querySelector(".tco-calculator");
-          var provisionedCapacity = "";
+          var userInputValue = "";
 
           const AMD_TB_PER_MONTH = 142.336;
           const ULTRA_DISK_TB_PER_MONTH = 122.59328;
@@ -239,6 +245,10 @@
           const MONTHS = 12;
 
           if (!tcoCalculator) return;
+
+          var amdProvsionedCapacity = 0;
+          var ultraDiskProvsionedCapacity = 0;
+          var premiumSsdProvsionedCapacity = 0;
 
           var totalCostHtmlField = document.getElementById('total-cost');
 
@@ -273,21 +283,27 @@
             var tibInput = document.getElementById("tib-input");
 
             if (tibInput) {
-              tibInput.value = provisionedCapacity;
+              tibInput.value = userInputValue;
 
               tibInput.addEventListener("input", function () {
                 this.value = getPositiveNumAndLimitMaxDigits(this);
 
-                provisionedCapacity = this.value;
+                userInputValue = this.value;
 
-                calculatePremiumSsdCost();
+                calculateValuesAndPrint();
               });
             }
           }
 
-          // Calculate the Cost of Rental
+          // Calculate the Cost of AMD Year One
           function calculateAmdCost() {
-            amdCost = provisionedCapacity * AMD_TB_PER_MONTH * MONTHS;
+            amdCost = userInputValue * AMD_TB_PER_MONTH * MONTHS;
+
+            const amdYearOneCostHtml = document.getElementById('amd-cost-year-one');
+
+            if (amdYearOneCostHtml) {
+              amdYearOneCostHtml.textContent = numberToDollars(amdCost);
+            }
 
             if (totalCostHtmlField) {
               totalCostHtmlField.textContent = numberToDollars(amdCost);
@@ -296,9 +312,28 @@
             return amdCost;
           }
 
-          // Calculate the Cost of Rental
+          // Calculate the Provsioned Capacity AMD
+          function calculateAmdProvsionedCapacity() {
+            amdProvsionedCapacity = userInputValue * AMD_MAX_READ_IOPS;
+
+            const amdCapHtml = document.getElementById('amd-cap');
+
+            if (amdCapHtml) {
+              amdCapHtml.textContent = amdProvsionedCapacity;
+            }
+
+            return amdProvsionedCapacity;
+          }
+
+          // Calculate the Cost of Ultra Disk Year one
           function calculateUltraDiskCost() {
-            ultraDiskCost = (provisionedCapacity * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (provisionedCapacity * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
+            ultraDiskCost = (userInputValue * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (userInputValue * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
+
+            const  ultraDiskYearOneCostHtml = document.getElementById('ultra-disk-year-one');
+
+            if (ultraDiskYearOneCostHtml) {
+              ultraDiskYearOneCostHtml.textContent = numberToDollars(ultraDiskCost);
+            }
 
             if (totalCostHtmlField) {
               totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
@@ -307,15 +342,55 @@
             return ultraDiskCost;
           }
 
-          // Calculate the Cost of Rental
+          // Calculate the Provsioned Capacity Ultra Disk
+          function calculateUltraDiskProvsionedCapacity() {
+            ultraDiskProvsionedCapacity = userInputValue * ULTRA_DISK_MAX_READ_IOPS;
+
+            const ultraDiskCapHtml = document.getElementById('ultra-disk-cap');
+
+            if (ultraDiskCapHtml) {
+              ultraDiskCapHtml.textContent = ultraDiskProvsionedCapacity;
+            }
+
+            return ultraDiskProvsionedCapacity;
+          }
+
+          // Calculate the Cost of PremiumSsd Year one
           function calculatePremiumSsdCost() {
-            premiumSsdCost = (provisionedCapacity * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (provisionedCapacity * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((provisionedCapacity * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS ) / 1024);
+            premiumSsdCost = (userInputValue * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (userInputValue * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS ) / 1024);
+
+            const  premiumSsdYearOneCostHtml = document.getElementById('premium-ssd-year-one');
+
+            if (premiumSsdYearOneCostHtml) {
+              premiumSsdYearOneCostHtml.textContent = numberToDollars(premiumSsdCost);
+            }
 
             if (totalCostHtmlField) {
               totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
             }
 
             return premiumSsdCost;
+          }
+
+          // Calculate the Provsioned Capacity Ultra Disk
+          function calculatepremiumSsdProvsionedCapacity() {
+            premiumSsdProvsionedCapacity = userInputValue * PREMIUM_SSD_READ_IOPS;
+            const premiumSsdCapHtml = document.getElementById('premium-ssd-cap');
+
+            if (premiumSsdCapHtml) {
+              premiumSsdCapHtml.textContent = premiumSsdProvsionedCapacity;
+            }
+
+            return premiumSsdProvsionedCapacity;
+          }
+
+          function calculateValuesAndPrint() {
+            calculatepremiumSsdProvsionedCapacity()
+            calculateUltraDiskProvsionedCapacity();
+            calculateAmdProvsionedCapacity();
+            calculateAmdCost();
+            calculateUltraDiskCost();
+            calculatePremiumSsdCost();
           }
 
           initListeners();
@@ -328,6 +403,29 @@
           // - Premium SSD 1 year Done
 
           // Calculate 5 years cost
+
+          // google.charts.load('current', {'packages':['corechart']});
+          // google.charts.setOnLoadCallback(drawChart);
+
+          // function drawChart() {
+          //   var data = google.visualization.arrayToDataTable([
+          //     ['Year', 'Ultra Disk', 'Premium SSD' ,'Lightbits' ],
+          //     ['Year One',  1354862.717, 194574.206, 170803.200],
+          //     ['Year Two',  1170, 460, 899],
+          //     ['Year Three',  660, 1120, 90],
+          //     ['Year Four',  1030, 540, 655],
+          //     ['Year Five',  1030, 540, 7777]
+          //   ]);
+
+          //   var options = {
+          //     title: 'Total Cost Savings in 5 years',
+          //     hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          //     vAxis: {minValue: 0}
+          //   };
+
+          //   var chart = new google.visualization.AreaChart(document.getElementById('line-graph'));
+          //   chart.draw(data, options);
+          // }        
         });
       })();
     </script>
@@ -416,7 +514,80 @@
                   >
                 </div>
               </div>
-              <div id="chart_div"></div>
+              <div class="results">
+                <h3>TCO - Cumulative (15% yoy)</h3>
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>Year's</th>
+                      <th>1 year</th>
+                      <th>2 year</th>
+                      <th>3 year</th>
+                      <th>4 year</th>
+                      <th>5 year</th>
+                    </tr>
+                    <tr>
+                      <th>Ultra Disk</th>
+                      <td id="ultra-disk-year-one">0</td>
+                      <td id="ultra-disk-year-two">0</td>
+                      <td id="ultra-disk-year-three">0</td>
+                      <td id="ultra-disk-year-four">0</td>
+                      <td id="ultra-disk-year-five">0</td>
+                    </tr>
+                    <tr>
+                      <th>Premiun SSD v2</th>
+                      <td id="premium-ssd-year-one">0</td>
+                      <td id="premium-ssd-year-two">0</td>
+                      <td id="premium-ssd-year-three">0</td>
+                      <td id="premium-ssd-year-four">0</td>
+                      <td id="premium-ssd-year-five">0</td>
+                    </tr>
+                    <tr>
+                      <th>Lightbits</th>
+                      <td id="amd-cost-year-one">0</td>
+                      <td id="amd-cost-year-two">0</td>
+                      <td id="amd-cost-year-three">0</td>
+                      <td id="amd-cost-year-four">0</td>
+                      <td id="amd-cost-year-five">0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="results">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>Max IOPS Per Provsioned Capacity</th>
+                    </tr>
+                    <tr>
+                      <th>Ultra Disk</th>
+                      <td id="ultra-disk-cap">0</td>
+                    </tr>
+                    <tr>
+                      <th>Premiun SSD v2</th>
+                      <td id="premium-ssd-cap">0</td>
+                    </tr>
+                    <tr>
+                      <th>Lightbits</th>
+                      <td id="amd-cap">0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="calculator-graph-wrap">
+                <div class="row">
+                  <div class="col-two">
+                    <div id="line-graph">
+
+                    </div>
+                  </div>
+                  <div class="col-two">
+                    <div id="bar-graph">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
