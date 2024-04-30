@@ -234,11 +234,11 @@
 
           const AMD_IOPS_MONTH = 0;
           const ULTRA_DISK_IOPS_MONTH = 0.04964;
-          const PREMIUM_SSD_IOPS_MONTH = 0.0052;
+          const PREMIUM_SSD_IOPS_MONTH = 0.00520;
 
           const AMD_MBPS_MONTH = 0;
           const ULTRA_DISK_MBPS_MONTH = 0.34967;
-          const PREMIUM_SSD_MBPS_MONTH = 0.041;
+          const PREMIUM_SSD_MBPS_MONTH = 0.04100;
 
           const YEARLY_INFLAMATION_VALUE = (1 + 0.15);
 
@@ -249,6 +249,24 @@
           var amdProvsionedCapacity = 0;
           var ultraDiskProvsionedCapacity = 0;
           var premiumSsdProvsionedCapacity = 0;
+
+          var amdCostOneYear = 0;
+          var amdCostTwoYear = 0;
+          var amdCostThreeYear = 0;
+          var amdCostFourYear = 0;
+          var amdCostFiveYear = 0;
+
+          var ultraDiskOneYearCost = 0;
+          var ultraDiskTwoYearCost = 0;
+          var ultraDiskThreeYearCost = 0;
+          var ultraDiskFourYearCost = 0;
+          var ultraDiskFiveYearCost = 0;
+
+          var premiumSsdOneYearCost = 0; 
+          var premiumSsdTwoYearCost = 0; 
+          var premiumSsdThreeYearCost = 0; 
+          var premiumSsdFourYearCost = 0; 
+          var premiumSsdFiveYearCost = 0; 
 
           var totalCostHtmlField = document.getElementById('total-cost');
 
@@ -289,6 +307,17 @@
                 this.value = getPositiveNumAndLimitMaxDigits(this);
 
                 userInputValue = this.value;
+                var amdResult = calculateAmdCost();
+                var ultraDiskResult = calculateUltraDiskCost();
+                var premiumSsdResults = calculatePremiumSsdCost();
+
+                var ultraDiskTotalCost = calculateTotalCostSavings(amdResult.fiveYear, ultraDiskResult.fiveYear);
+                var premiumSsdTotalCost = calculateTotalCostSavings(amdResult.fiveYear, premiumSsdResults.fiveYear);
+
+                var ultraDiskTotalCostInPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, ultraDiskResult.fiveYear);
+                var premiumSsdTotalCostPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, premiumSsdResults.fiveYear);
+
+                console.log(ultraDiskTotalCostInPercentage, premiumSsdTotalCostPercentage);
 
                 calculateValuesAndPrint();
               });
@@ -297,7 +326,7 @@
 
           // Calculate the Cost of AMD Year One
           function calculateAmdCost() {
-            amdCost = userInputValue * AMD_TB_PER_MONTH * MONTHS;
+            var amdCost = userInputValue * AMD_TB_PER_MONTH * MONTHS;
 
             const amdYearOneCostHtml = document.getElementById('amd-cost-year-one');
 
@@ -305,11 +334,34 @@
               amdYearOneCostHtml.textContent = numberToDollars(amdCost);
             }
 
-            if (totalCostHtmlField) {
-              totalCostHtmlField.textContent = numberToDollars(amdCost);
+            amdCostOneYear = amdCost;
+            amdCostTwoYear = amdCostOneYear * (1 + 0.15);
+            amdCostThreeYear = amdCostTwoYear * (1 + 0.15);
+            amdCostFourYear = amdCostThreeYear * (1 + 0.15);
+            amdCostFiveYear = amdCostFourYear * (1 + 0.15);
+
+            const amdTcoCost = {
+              oneYear: amdCostOneYear,
+              twoYear: amdCostTwoYear,
+              threeYear: amdCostThreeYear,
+              fourYear: amdCostFourYear,
+              fiveYear: amdCostFiveYear
             }
 
-            return amdCost;
+            const cumulativeAmdCost = {
+              oneYear: amdTcoCost.oneYear,
+              twoYear: (amdTcoCost.twoYear + amdTcoCost.oneYear),
+              threeYear: (amdTcoCost.threeYear + amdTcoCost.oneYear + amdTcoCost.twoYear),
+              fourYear: (amdTcoCost.fourYear + amdTcoCost.oneYear + amdTcoCost.threeYear + amdTcoCost.twoYear),
+              fiveYear: (amdTcoCost.fiveYear + amdTcoCost.oneYear + amdTcoCost.fourYear + amdTcoCost.threeYear + amdTcoCost.twoYear)
+            }
+
+            // if (totalCostHtmlField) { 
+            //   totalCostHtmlField.textContent = numberToDollars(amdCost);
+            // }
+
+
+            return cumulativeAmdCost;
           }
 
           // Calculate the Provsioned Capacity AMD
@@ -327,19 +379,41 @@
 
           // Calculate the Cost of Ultra Disk Year one
           function calculateUltraDiskCost() {
-            ultraDiskCost = (userInputValue * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (userInputValue * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
+            var ultraDiskCost = (userInputValue * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (userInputValue * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
 
-            const  ultraDiskYearOneCostHtml = document.getElementById('ultra-disk-year-one');
+            const ultraDiskYearOneCostHtml = document.getElementById('ultra-disk-year-one');
 
             if (ultraDiskYearOneCostHtml) {
               ultraDiskYearOneCostHtml.textContent = numberToDollars(ultraDiskCost);
             }
 
-            if (totalCostHtmlField) {
-              totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
+            ultraDiskTcoOneYearCost = ultraDiskCost;
+            ultraDiskTcoTwoYearCost = ultraDiskTcoOneYearCost * (1+0.15);
+            ultraDiskTcoThreeYearCost = ultraDiskTcoTwoYearCost * (1+0.15);
+            ultraDiskTcoFourYearCost = ultraDiskTcoThreeYearCost * (1+0.15);
+            ultraDiskTcoFiveYearCost = ultraDiskTcoFourYearCost * (1+0.15);
+
+            const ultraDiskTcoCost = {
+              oneYear: ultraDiskTcoOneYearCost,
+              twoYear: ultraDiskTcoTwoYearCost,
+              threeYear: ultraDiskTcoThreeYearCost,
+              fourYear: ultraDiskTcoFourYearCost,
+              fiveYear: ultraDiskTcoFiveYearCost
             }
 
-            return ultraDiskCost;
+            const cumulativeUltraDiskCost = {
+              oneYear: ultraDiskTcoCost.oneYear,
+              twoYear: (ultraDiskTcoCost.twoYear + ultraDiskTcoCost.oneYear),
+              threeYear: (ultraDiskTcoCost.threeYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.twoYear),
+              fourYear: (ultraDiskTcoCost.fourYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear),
+              fiveYear: (ultraDiskTcoCost.fiveYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.fourYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear)
+            }
+
+            // if (totalCostHtmlField) {
+            //   totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
+            // }
+
+            return cumulativeUltraDiskCost;
           }
 
           // Calculate the Provsioned Capacity Ultra Disk
@@ -359,17 +433,41 @@
           function calculatePremiumSsdCost() {
             premiumSsdCost = (userInputValue * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (userInputValue * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS ) / 1024);
 
-            const  premiumSsdYearOneCostHtml = document.getElementById('premium-ssd-year-one');
+            const premiumSsdYearOneCostHtml = document.getElementById('premium-ssd-year-one');
 
             if (premiumSsdYearOneCostHtml) {
               premiumSsdYearOneCostHtml.textContent = numberToDollars(premiumSsdCost);
             }
 
-            if (totalCostHtmlField) {
-              totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
+            premiumSsdOneYearCost = premiumSsdCost;
+            premiumSsdTwoYearCost = premiumSsdOneYearCost * (1+0.15);
+            premiumSsdThreeYearCost = premiumSsdTwoYearCost * (1+0.15);
+            premiumSsdFourYearCost = premiumSsdThreeYearCost * (1+0.15);
+            premiumSsdFiveYearCost = premiumSsdFourYearCost * (1+0.15);
+
+            const premiumSsdTcoCost = {
+              oneYear: premiumSsdOneYearCost,
+              twoYear: premiumSsdTwoYearCost,
+              threeYear: premiumSsdThreeYearCost,
+              fourYear: premiumSsdFourYearCost,
+              fiveYear: premiumSsdFiveYearCost
             }
 
-            return premiumSsdCost;
+            const cumulativePremiumSsdCost = {
+              oneYear: premiumSsdTcoCost.oneYear,
+              twoYear: (premiumSsdTcoCost.twoYear + premiumSsdTcoCost.oneYear),
+              threeYear: (premiumSsdTcoCost.threeYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.twoYear),
+              fourYear: (premiumSsdTcoCost.fourYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear),
+              fiveYear: (premiumSsdTcoCost.fiveYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.fourYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear)
+            }
+
+            // if (totalCostHtmlField) {
+            //   totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
+            // }
+
+            console.log(cumulativePremiumSsdCost, 'test');
+
+            return cumulativePremiumSsdCost;
           }
 
           // Calculate the Provsioned Capacity Ultra Disk
@@ -393,6 +491,15 @@
             calculatePremiumSsdCost();
           }
 
+          function calculateTotalCostSavings(baseCost, fiveCost) {
+            console.log(fiveCost, baseCost);
+            return Math.abs(fiveCost - baseCost);
+          }
+
+          function calculateTotalCostInPercentage(baseCost, fiveYearCost) {
+            return `${~~((100 * baseCost) / fiveYearCost)}%`;
+          }
+
           initListeners();
 
           // get value on keydown Done
@@ -402,7 +509,7 @@
           // - Ultra Disk 1 year Done
           // - Premium SSD 1 year Done
 
-          // Calculate 5 years cost
+          // Calculate 5 years cost Done
 
           // google.charts.load('current', {'packages':['corechart']});
           // google.charts.setOnLoadCallback(drawChart);
