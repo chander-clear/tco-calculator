@@ -162,8 +162,6 @@
       width: 100%;
       height: 100%;
       z-index: -100;
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
       -webkit-box-align: center;
       -ms-flex-align: center;
@@ -192,40 +190,64 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.5);
     }
 
     .content-modal-item {
-      max-width: 880px;
+      max-width: 88rem;
       width: 100%;
-      height: 600px;
-      border-radius: 10px;
+      height: 50rem;
+      border-radius: 1rem;
       margin: auto;
       position: relative;
+      background-color: #fff;
     }
 
-    .content-modal__item .content-wrap {
+    .content-modal-item .content-wrap {
       width: 100%;
       height: 100%;
       border-radius: 10px;
       overflow: hidden;
       background-color: #fff;
-      border: 2px solid #e5e5d9;
-      padding: 2.5rem;
+      border: 2px solid #281529;
+      padding: 7.5rem 11rem;
+      overflow-y: auto;
     }
 
-    .content-modal__item .content-wrap h3 {
+    .content-modal-item .content-wrap h3 {
+      padding-bottom: 2rem;
       margin-bottom: 2rem;
+      font-size: 3rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2; 
+      letter-spacing: 1px;
+      border-bottom: 1px solid #790977;
     }
 
-    .content-modal__item .content-wrap li {
-      margin-top: 1rem;
+    .content-modal-item .content-wrap li {
+      margin-top: 1.5rem;
+      color: #000;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.5; 
+      letter-spacing: 0.5px;
+    }
+
+    .content-modal-item .content-wrap li strong {
+      font-size: inherit;
+      font-weight: 700;
     }
 
     .content-modal .close-button {
       position: absolute;
-      right: 20px;
-      top: 20px;
+      cursor: pointer;
+      right: 4rem;
+      top: 3.2rem;
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
     }
 
     .content-modal--open {
@@ -802,21 +824,25 @@
         </div>
       </div>
     </section>
-    <section class="content-modal">
+    <section class="content-modal content-modal--open">
       <div class="container">
-        <span class="close-button"></span>
         <div class="content-modal-item">
           <div class="content-wrap">
+            <span class="close-button"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+              <path d="M12.4429 24C19.0703 24 24.4429 18.6274 24.4429 12C24.4429 5.37258 19.0703 0 12.4429 0C5.81545 0 0.442871 5.37258 0.442871 12C0.442871 18.6274 5.81545 24 12.4429 24Z" fill="#281529"/>
+              <path d="M15.4429 9L9.44287 15" stroke="#FFCF19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.44287 9L15.4429 15" stroke="#FFCF19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg></span>
             <h3>Key Assumptions</h3>
             <ul>
-              <li>Data Reduction: 3:1: AchieveN through compression, thin provisioning with auto-scaling,
+              <li><strong>Data Reduction:</strong> 3:1: AchieveN through compression, thin provisioning with auto-scaling,
                 space-efficient snapshots, anN clonesM</li>
-              <li>Highly Available w/ 2 replicas: Ensures high availability of Nata with two replicasM</li>
-              <li>Azure VMs: ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM
+              <li><strong>Highly Available w/ 2 replicas:</strong> Ensures high availability of Nata with two replicasM</li>
+              <li><strong>Azure VMs:</strong> ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM
               </li>
-              <li>Annual Expected Growth: Accounts for a projecteN annual growth rate of 15%M</li>
-              <li>LRS Azure: Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
-              <li>Premium SSD v2 Assumptions: Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
+              <li><strong>Annual Expected Growth:</strong> Accounts for a projecteN annual growth rate of 15%M</li>
+              <li><strong>LRS Azure:</strong> Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
+              <li><strong>Premium SSD v2 Assumptions:</strong> Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
             </ul>
           </div>
         </div>
