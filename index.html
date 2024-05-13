@@ -183,8 +183,7 @@
       }
     }
 
-    .content-modal:before {
-      content: "";
+    .content-modal .backdrop {
       position: absolute;
       top: 0;
       left: 0;
@@ -349,6 +348,10 @@
     (function () {
       document.addEventListener("DOMContentLoaded", function () {
         var tcoCalculator = document.querySelector(".tco-calculator");
+        var keyPointsBtn = document.querySelector('#key-points');
+        var modal = document.querySelector('.content-modal');
+        var modalCloseBtn = document.querySelector('.close-button');
+        var backdrop = document.querySelector('.content-modal .backdrop');
         var userInputValue = "";
 
         const AMD_TB_PER_MONTH = 142.336;
@@ -627,6 +630,23 @@
           return `${~~((100 * baseCost) / fiveYearCost)}%`;
         }
 
+        function handleKeyPointBtnClick(e) {
+          e.preventDefault();
+          e.stopPropagation();
+  
+          modal.classList.add('content-modal--open');
+        }
+
+        function handleModalClose(e) {
+          e.stopPropagation();
+
+          modal.classList.remove('content-modal--open');
+        }
+
+        keyPointsBtn.addEventListener('click', handleKeyPointBtnClick);
+        modalCloseBtn.addEventListener('click', handleModalClose);
+        backdrop.addEventListener('click', handleModalClose);
+
         initListeners();
 
         // get value on keydown Done
@@ -662,6 +682,7 @@
         // }        
       });
     })();
+
   </script>
 </head>
 
@@ -726,7 +747,7 @@
         <div class="container">
           <div class="button-wrapper">
             <a href="/contact-us" class="btn-new btn-new-default">Ultra Disk </a>
-            <a href="/" class="btn-link-yellow">View Key Assumptions <span>
+            <a href="/" class="btn-link-yellow" id="key-points">View Key Assumptions <span>
               <svg xmlns="http://www.w3.org/2000/svg" width="27" height="28" viewBox="0 0 27 28" fill="none">
                 <g clip-path="url(#clip0_103_13)">
                   <path d="M19.6506 14H6.55005" stroke="#FFCF19" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -824,7 +845,8 @@
         </div>
       </div>
     </section>
-    <section class="content-modal content-modal--open">
+    <section class="content-modal">
+      <div class="backdrop" aria-label="backdrop"></div>
       <div class="container">
         <div class="content-modal-item">
           <div class="content-wrap">
@@ -833,17 +855,19 @@
               <path d="M15.4429 9L9.44287 15" stroke="#FFCF19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M9.44287 9L15.4429 15" stroke="#FFCF19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg></span>
-            <h3>Key Assumptions</h3>
-            <ul>
-              <li><strong>Data Reduction:</strong> 3:1: AchieveN through compression, thin provisioning with auto-scaling,
-                space-efficient snapshots, anN clonesM</li>
-              <li><strong>Highly Available w/ 2 replicas:</strong> Ensures high availability of Nata with two replicasM</li>
-              <li><strong>Azure VMs:</strong> ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM
-              </li>
-              <li><strong>Annual Expected Growth:</strong> Accounts for a projecteN annual growth rate of 15%M</li>
-              <li><strong>LRS Azure:</strong> Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
-              <li><strong>Premium SSD v2 Assumptions:</strong> Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
-            </ul>
+            <div class="content-inner">
+              <h3>Key Assumptions</h3>
+              <ul>
+                <li><strong>Data Reduction:</strong> 3:1: AchieveN through compression, thin provisioning with auto-scaling,
+                  space-efficient snapshots, anN clonesM</li>
+                <li><strong>Highly Available w/ 2 replicas:</strong> Ensures high availability of Nata with two replicasM</li>
+                <li><strong>Azure VMs:</strong> ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM
+                </li>
+                <li><strong>Annual Expected Growth:</strong> Accounts for a projecteN annual growth rate of 15%M</li>
+                <li><strong>LRS Azure:</strong> Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
+                <li><strong>Premium SSD v2 Assumptions:</strong> Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
