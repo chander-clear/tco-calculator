@@ -1,722 +1,828 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lightbits Calculator</title>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-      }
 
-      main {
-        position: relative;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lightbits Calculator</title>
+  <!--Load the AJAX API-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      font-size: 62.5%; 
+    }
 
-      section {
-        padding: 4rem 0;
-      }
+    main {
+      position: relative;
+      font-family: "Lato", sans-serif;
+    }
 
-      .container {
-        max-width: 1300px;
-        width: 100%;
-        padding: 0 1.5rem;
-        margin: 0 auto;
-      }
+    .container {
+      max-width: 1300px;
+      width: 100%;
+      padding: 0 1.5rem;
+      margin: 0 auto;
+    }
 
-      .btn-new {
-        cursor: pointer;
-        font-family: "Lato", Sans-serif;
-        font-size: 16px;
-        line-height: 1.2em;
-        letter-spacing: 1px;
-        border-style: solid;
-        border-width: 2px 2px 2px 2px;
-        border-color: #5f305e;
-        padding: 10px 15px 10px 15px;
-        text-decoration: none;
-        display: inline-block;
-        transition: all 0.3s ease-in-out;
-      }
+    .btn-new {
+      cursor: pointer;
+      font-family: "Lato", Sans-serif;
+      font-size: 1.6rem;
+      line-height: 1.2em;
+      letter-spacing: 1px;
+      border-style: solid;
+      border-width: 2px 2px 2px 2px;
+      border-radius: 1rem;
+      padding: 1.5rem 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease-in-out;
+    }
 
-      .btn-new-default {
-        color: #fff;
-        background-color: #5f305e;
-        margin-top: 1.5rem;
-      }
+    .btn-new-default {
+      color: #fff;
+      background-color: #BA9673;
+      border-color: #BA9673;
+    }
 
-      .btn-new-default:hover {
-        background-color: transparent;
-        color: #5f305e;
-      }
+    .btn-new-default:hover {
+      color: #BA9673;
+      background-color: #fff;
+    }
 
-      .btn-new-transparent {
-        color: #5f305e;
-        margin-top: 1.5rem;
-      }
+    .btn-new-transparent {
+      color: #5f305e;
+      margin-top: 1.5rem;
+    }
 
-      .btn-new-transparent:hover {
-        color: #fff;
-        background-color: #5f305e;
-      }
+    .btn-new-transparent:hover {
+      color: #fff;
+      background-color: #5f305e;
+    }
 
-      .row {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        position: relative;
-      }
+    .btn-link-yellow {
+      color: #FFCF19;
+      font-size: 1.9rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 1px;
+      text-decoration: none;
+      position: relative;
+    }
 
-      .col-two {
-        flex: 0 0 50%;
-        max-width: 50%;
-      }
+    .btn-link-yellow > span {
+      vertical-align: middle;
+      display: inline-block;
+      transition: transform 0.3s ease-in-out;
+    }
 
-      .intro-block {
-        text-align: center;
-      }
+    .btn-link-yellow:hover span {
+      transform: translateX(0.8rem);
+    }
 
-      .intro-block h2 {
-        margin-bottom: 1.5rem;
-      }
+    .row {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      position: relative;
+    }
 
-      .intro-block p {
-        max-width: 800px;
-        margin: 0 auto;
-      }
+    .col-two {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
 
-      .calculation {
-        text-align: center;
-      }
+    .intro-block h2 {
+      color: #281529;
+      margin-bottom: 1.5rem;
+      font-family: Lato;
+      font-size: 4.5rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.2; 
+      max-width: 102rem;
+      letter-spacing: 1px;
+    }
 
-      .calculation h2:not(:last-child) {
-        margin-bottom: 1rem;
-      }
+    .intro-block p {
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-      .calculator-form {
-        padding: 2rem 0;
-      }
+    .calculation {
+      text-align: center;
+    }
 
-      .form-group-input input {
-        color: #000;
-        font-size: 1rem;
-        line-height: 1;
-        width: 100%;
-        height: 3rem;
-        padding: 0.5rem 0.8rem;
-      }
+    .calculation h2:not(:last-child) {
+      margin-bottom: 1rem;
+    }
 
-      input[type="number"]::-webkit-outer-spin-button,
-      input[type="number"]::-webkit-inner-spin-button {
-        display: none;
-      }
+    .calculator-form {
+      padding: 2rem 0;
+    }
 
-      .form-group:not(:first-child) {
-        margin-top: 1.5rem;
-      }
+    .form-group-input input {
+      border-radius: 0.5rem;
+      font-size: 2rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.2;
+      width: 100%;
+      letter-spacing: 1px;
+      padding: 1rem;
+      height: 4.5rem;
+      outline: none;
+      border-width: 0.1rem;
+      border-style: solid;
+      border-color: #BA9673;
+    }
 
-      .btn-new-wrap a:not(:last-child) {
-        margin-right: 1rem;
-      }
+    .form-group-input input:focus {
+      border-color: #BA9673;
+    }
 
-      .form-group-input .btn-new-wrap .btn-new {
-        margin-top: 0;
-      }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      display: none;
+    }
 
+
+    .content-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -100;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background: transparent;
+      opacity: 0;
+      visibility: hidden;
+      -webkit-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out;
+    }
+
+    @media (max-width: 1279px) {
       .content-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -100;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        background: transparent;
-        opacity: 0;
-        visibility: hidden;
-        -webkit-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
+        padding: 50px 0;
       }
+    }
 
-      @media (max-width: 1279px) {
-        .content-modal {
-          padding: 50px 0;
+    .content-modal:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .content-modal-item {
+      max-width: 880px;
+      width: 100%;
+      height: 600px;
+      border-radius: 10px;
+      margin: auto;
+      position: relative;
+    }
+
+    .content-modal__item .content-wrap {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #fff;
+      border: 2px solid #e5e5d9;
+      padding: 2.5rem;
+    }
+
+    .content-modal__item .content-wrap h3 {
+      margin-bottom: 2rem;
+    }
+
+    .content-modal__item .content-wrap li {
+      margin-top: 1rem;
+    }
+
+    .content-modal .close-button {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+
+    .content-modal--open {
+      opacity: 1;
+      z-index: 100;
+      visibility: visible;
+    }
+
+    table {
+      text-align: left;
+      margin-top: 2rem;
+    }
+
+    table td,
+    table th {
+      padding: 0.5rem;
+    }
+
+    .calculator-input-wrapper {
+      padding: 10rem 0;
+      background: rgba(237, 231, 237, 1);
+    }
+
+    .calculator-input-wrapper .content-wrap p {
+      font-size: 1.9rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.4; 
+      letter-spacing: 1px;
+      padding-right: 2rem;
+    }
+
+    .calculator-input-wrapper .input-outer-wrap {
+      border-radius: 10px;
+      border: 2px solid #790977;
+      padding: 4rem;
+      background: #fff;
+      margin-left: 10rem;
+    }
+
+    .calculator-input-wrapper .input-outer-wrap h4 {
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+    }
+
+    .input-outer-wrap .form-group-input {
+      display: flex;
+      justify-content: space-between;
+      column-gap: 2rem;
+    }
+
+    .input-outer-wrap .form-group-input .input-group {
+      flex-basis: 100%;
+      flex-grow: 1;
+    }
+
+    .calculation-result-wrapper {
+      padding: 5rem 0;
+      background: rgba(95, 48, 94, 1);
+      color: #fff;
+    }
+
+    .calculation-number h2 {
+      font-size: 3rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      column-gap: 2rem;
+    }
+
+    .calculation-number h2 span {
+      font-size: 3.8rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      color: #FFCF19;
+    }
+
+    .calculator-action-wrapper {
+      padding: 3.5rem 0;
+      background: rgba(68, 39, 68, 1);
+      text-align: center;
+    }
+
+    .calculator-action-wrapper .button-wrapper a {
+      margin: 0 2.5rem;
+    }
+  </style>
+
+  <script type="text/javascript">
+    (function () {
+      document.addEventListener("DOMContentLoaded", function () {
+        var tcoCalculator = document.querySelector(".tco-calculator");
+        var userInputValue = "";
+
+        const AMD_TB_PER_MONTH = 142.336;
+        const ULTRA_DISK_TB_PER_MONTH = 122.59328;
+        const PREMIUM_SSD_TB_PER_MONTH = 82.944;
+
+        const AMD_MAX_READ_IOPS = 66000;
+        const ULTRA_DISK_MAX_READ_IOPS = 20000;
+        const PREMIUM_SSD_READ_IOPS = 15000;
+
+        const AMD_IOPS_MONTH = 0;
+        const ULTRA_DISK_IOPS_MONTH = 0.04964;
+        const PREMIUM_SSD_IOPS_MONTH = 0.00520;
+
+        const AMD_MBPS_MONTH = 0;
+        const ULTRA_DISK_MBPS_MONTH = 0.34967;
+        const PREMIUM_SSD_MBPS_MONTH = 0.04100;
+
+        const YEARLY_INFLAMATION_VALUE = (1 + 0.15);
+
+        const MONTHS = 12;
+
+        if (!tcoCalculator) return;
+
+        var amdProvsionedCapacity = 0;
+        var ultraDiskProvsionedCapacity = 0;
+        var premiumSsdProvsionedCapacity = 0;
+
+        var amdCostOneYear = 0;
+        var amdCostTwoYear = 0;
+        var amdCostThreeYear = 0;
+        var amdCostFourYear = 0;
+        var amdCostFiveYear = 0;
+
+        var ultraDiskOneYearCost = 0;
+        var ultraDiskTwoYearCost = 0;
+        var ultraDiskThreeYearCost = 0;
+        var ultraDiskFourYearCost = 0;
+        var ultraDiskFiveYearCost = 0;
+
+        var premiumSsdOneYearCost = 0;
+        var premiumSsdTwoYearCost = 0;
+        var premiumSsdThreeYearCost = 0;
+        var premiumSsdFourYearCost = 0;
+        var premiumSsdFiveYearCost = 0;
+
+        var totalCostHtmlField = document.getElementById('total-cost');
+
+        // Convert numeric to dollars currency format
+        function numberToDollars(num) {
+          var roundedNum = num > 0 ? parseFloat(num).toFixed(3) : num;
+          return (
+            "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          );
         }
-      }
 
-      .content-modal:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-      }
-
-      .content-modal-item {
-        max-width: 880px;
-        width: 100%;
-        height: 600px;
-        border-radius: 10px;
-        margin: auto;
-        position: relative;
-      }
-
-      .content-modal__item .content-wrap {
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        overflow: hidden;
-        background-color: #fff;
-        border: 2px solid #e5e5d9;
-        padding: 2.5rem;
-      }
-
-      .content-modal__item .content-wrap h3 {
-        margin-bottom: 2rem;
-      }
-      
-      .content-modal__item .content-wrap li {
-        margin-top: 1rem;
-      }
-
-      .content-modal .close-button {
-        position: absolute;
-        right: 20px;
-        top: 20px;
-      }
-
-      .content-modal--open {
-        opacity: 1;
-        z-index: 100;
-        visibility: visible;
-      }
-
-      table {
-        text-align: left;
-        margin-top: 2rem;
-      }
-
-      table td, table th {
-        padding: 0.5rem;
-      }
-
-    </style>
-
-    <script type="text/javascript">
-      (function () {
-        document.addEventListener("DOMContentLoaded", function () {
-          var tcoCalculator = document.querySelector(".tco-calculator");
-          var userInputValue = "";
-
-          const AMD_TB_PER_MONTH = 142.336;
-          const ULTRA_DISK_TB_PER_MONTH = 122.59328;
-          const PREMIUM_SSD_TB_PER_MONTH = 82.944;
-
-          const AMD_MAX_READ_IOPS = 66000;
-          const ULTRA_DISK_MAX_READ_IOPS = 20000;
-          const PREMIUM_SSD_READ_IOPS = 15000;
-
-          const AMD_IOPS_MONTH = 0;
-          const ULTRA_DISK_IOPS_MONTH = 0.04964;
-          const PREMIUM_SSD_IOPS_MONTH = 0.00520;
-
-          const AMD_MBPS_MONTH = 0;
-          const ULTRA_DISK_MBPS_MONTH = 0.34967;
-          const PREMIUM_SSD_MBPS_MONTH = 0.04100;
-
-          const YEARLY_INFLAMATION_VALUE = (1 + 0.15);
-
-          const MONTHS = 12;
-
-          if (!tcoCalculator) return;
-
-          var amdProvsionedCapacity = 0;
-          var ultraDiskProvsionedCapacity = 0;
-          var premiumSsdProvsionedCapacity = 0;
-
-          var amdCostOneYear = 0;
-          var amdCostTwoYear = 0;
-          var amdCostThreeYear = 0;
-          var amdCostFourYear = 0;
-          var amdCostFiveYear = 0;
-
-          var ultraDiskOneYearCost = 0;
-          var ultraDiskTwoYearCost = 0;
-          var ultraDiskThreeYearCost = 0;
-          var ultraDiskFourYearCost = 0;
-          var ultraDiskFiveYearCost = 0;
-
-          var premiumSsdOneYearCost = 0; 
-          var premiumSsdTwoYearCost = 0; 
-          var premiumSsdThreeYearCost = 0; 
-          var premiumSsdFourYearCost = 0; 
-          var premiumSsdFiveYearCost = 0; 
-
-          var totalCostHtmlField = document.getElementById('total-cost');
-
-          // Convert numeric to dollars currency format
-          function numberToDollars(num) {
-            var roundedNum = num > 0 ? parseFloat(num).toFixed(3) : num;
-            return (
-              "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        // Convert negative numbers to positive numbers and limit max digits to 12 digits for number inputs
+        function getPositiveNumAndLimitMaxDigits(input) {
+          if (!!input.value) {
+            input.value = parseInt(
+              input.value.toLocaleString("fullwide", { useGrouping: false }),
+              10
             );
+            input.value =
+              Math.abs(input.value) >= 0 ? Math.abs(input.value) : null;
+            input.value =
+              input.value.length > input.maxLength
+                ? input.value.slice(0, input.maxLength)
+                : input.value;
           }
 
-          // Convert negative numbers to positive numbers and limit max digits to 12 digits for number inputs
-          function getPositiveNumAndLimitMaxDigits(input) {
-            if (!!input.value) {
-              input.value = parseInt(
-                input.value.toLocaleString("fullwide", { useGrouping: false }),
-                10
-              );
-              input.value =
-                Math.abs(input.value) >= 0 ? Math.abs(input.value) : null;
-              input.value =
-                input.value.length > input.maxLength
-                  ? input.value.slice(0, input.maxLength)
-                  : input.value;
-            }
+          return input.value;
+        }
 
-            return input.value;
+        // Add, initialize and listen to input events in form
+        function initListeners() {
+          var tibInput = document.getElementById("tib-input");
+
+          if (tibInput) {
+            tibInput.value = userInputValue;
+
+            tibInput.addEventListener("input", function () {
+              this.value = getPositiveNumAndLimitMaxDigits(this);
+
+              userInputValue = this.value;
+              var amdResult = calculateAmdCost();
+              var ultraDiskResult = calculateUltraDiskCost();
+              var premiumSsdResults = calculatePremiumSsdCost();
+
+              var ultraDiskTotalCost = calculateTotalCostSavings(amdResult.fiveYear, ultraDiskResult.fiveYear);
+              var premiumSsdTotalCost = calculateTotalCostSavings(amdResult.fiveYear, premiumSsdResults.fiveYear);
+
+              var ultraDiskTotalCostInPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, ultraDiskResult.fiveYear);
+              var premiumSsdTotalCostPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, premiumSsdResults.fiveYear);
+
+              console.log(ultraDiskTotalCostInPercentage, premiumSsdTotalCostPercentage);
+
+              calculateValuesAndPrint();
+            });
+          }
+        }
+
+        // Calculate the Cost of AMD Year One
+        function calculateAmdCost() {
+          var amdCost = userInputValue * AMD_TB_PER_MONTH * MONTHS;
+
+          const amdYearOneCostHtml = document.getElementById('amd-cost-year-one');
+
+          if (amdYearOneCostHtml) {
+            amdYearOneCostHtml.textContent = numberToDollars(amdCost);
           }
 
-          // Add, initialize and listen to input events in form
-          function initListeners() {
-            var tibInput = document.getElementById("tib-input");
+          amdCostOneYear = amdCost;
+          amdCostTwoYear = amdCostOneYear * (1 + 0.15);
+          amdCostThreeYear = amdCostTwoYear * (1 + 0.15);
+          amdCostFourYear = amdCostThreeYear * (1 + 0.15);
+          amdCostFiveYear = amdCostFourYear * (1 + 0.15);
 
-            if (tibInput) {
-              tibInput.value = userInputValue;
-
-              tibInput.addEventListener("input", function () {
-                this.value = getPositiveNumAndLimitMaxDigits(this);
-
-                userInputValue = this.value;
-                var amdResult = calculateAmdCost();
-                var ultraDiskResult = calculateUltraDiskCost();
-                var premiumSsdResults = calculatePremiumSsdCost();
-
-                var ultraDiskTotalCost = calculateTotalCostSavings(amdResult.fiveYear, ultraDiskResult.fiveYear);
-                var premiumSsdTotalCost = calculateTotalCostSavings(amdResult.fiveYear, premiumSsdResults.fiveYear);
-
-                var ultraDiskTotalCostInPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, ultraDiskResult.fiveYear);
-                var premiumSsdTotalCostPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, premiumSsdResults.fiveYear);
-
-                console.log(ultraDiskTotalCostInPercentage, premiumSsdTotalCostPercentage);
-
-                calculateValuesAndPrint();
-              });
-            }
+          const amdTcoCost = {
+            oneYear: amdCostOneYear,
+            twoYear: amdCostTwoYear,
+            threeYear: amdCostThreeYear,
+            fourYear: amdCostFourYear,
+            fiveYear: amdCostFiveYear
           }
 
-          // Calculate the Cost of AMD Year One
-          function calculateAmdCost() {
-            var amdCost = userInputValue * AMD_TB_PER_MONTH * MONTHS;
-
-            const amdYearOneCostHtml = document.getElementById('amd-cost-year-one');
-
-            if (amdYearOneCostHtml) {
-              amdYearOneCostHtml.textContent = numberToDollars(amdCost);
-            }
-
-            amdCostOneYear = amdCost;
-            amdCostTwoYear = amdCostOneYear * (1 + 0.15);
-            amdCostThreeYear = amdCostTwoYear * (1 + 0.15);
-            amdCostFourYear = amdCostThreeYear * (1 + 0.15);
-            amdCostFiveYear = amdCostFourYear * (1 + 0.15);
-
-            const amdTcoCost = {
-              oneYear: amdCostOneYear,
-              twoYear: amdCostTwoYear,
-              threeYear: amdCostThreeYear,
-              fourYear: amdCostFourYear,
-              fiveYear: amdCostFiveYear
-            }
-
-            const cumulativeAmdCost = {
-              oneYear: amdTcoCost.oneYear,
-              twoYear: (amdTcoCost.twoYear + amdTcoCost.oneYear),
-              threeYear: (amdTcoCost.threeYear + amdTcoCost.oneYear + amdTcoCost.twoYear),
-              fourYear: (amdTcoCost.fourYear + amdTcoCost.oneYear + amdTcoCost.threeYear + amdTcoCost.twoYear),
-              fiveYear: (amdTcoCost.fiveYear + amdTcoCost.oneYear + amdTcoCost.fourYear + amdTcoCost.threeYear + amdTcoCost.twoYear)
-            }
-
-            // if (totalCostHtmlField) { 
-            //   totalCostHtmlField.textContent = numberToDollars(amdCost);
-            // }
-
-
-            return cumulativeAmdCost;
+          const cumulativeAmdCost = {
+            oneYear: amdTcoCost.oneYear,
+            twoYear: (amdTcoCost.twoYear + amdTcoCost.oneYear),
+            threeYear: (amdTcoCost.threeYear + amdTcoCost.oneYear + amdTcoCost.twoYear),
+            fourYear: (amdTcoCost.fourYear + amdTcoCost.oneYear + amdTcoCost.threeYear + amdTcoCost.twoYear),
+            fiveYear: (amdTcoCost.fiveYear + amdTcoCost.oneYear + amdTcoCost.fourYear + amdTcoCost.threeYear + amdTcoCost.twoYear)
           }
 
-          // Calculate the Provsioned Capacity AMD
-          function calculateAmdProvsionedCapacity() {
-            amdProvsionedCapacity = userInputValue * AMD_MAX_READ_IOPS;
+          // if (totalCostHtmlField) { 
+          //   totalCostHtmlField.textContent = numberToDollars(amdCost);
+          // }
 
-            const amdCapHtml = document.getElementById('amd-cap');
 
-            if (amdCapHtml) {
-              amdCapHtml.textContent = amdProvsionedCapacity;
-            }
+          return cumulativeAmdCost;
+        }
 
-            return amdProvsionedCapacity;
+        // Calculate the Provsioned Capacity AMD
+        function calculateAmdProvsionedCapacity() {
+          amdProvsionedCapacity = userInputValue * AMD_MAX_READ_IOPS;
+
+          const amdCapHtml = document.getElementById('amd-cap');
+
+          if (amdCapHtml) {
+            amdCapHtml.textContent = amdProvsionedCapacity;
           }
 
-          // Calculate the Cost of Ultra Disk Year one
-          function calculateUltraDiskCost() {
-            var ultraDiskCost = (userInputValue * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (userInputValue * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
+          return amdProvsionedCapacity;
+        }
 
-            const ultraDiskYearOneCostHtml = document.getElementById('ultra-disk-year-one');
+        // Calculate the Cost of Ultra Disk Year one
+        function calculateUltraDiskCost() {
+          var ultraDiskCost = (userInputValue * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (userInputValue * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
 
-            if (ultraDiskYearOneCostHtml) {
-              ultraDiskYearOneCostHtml.textContent = numberToDollars(ultraDiskCost);
-            }
+          const ultraDiskYearOneCostHtml = document.getElementById('ultra-disk-year-one');
 
-            ultraDiskTcoOneYearCost = ultraDiskCost;
-            ultraDiskTcoTwoYearCost = ultraDiskTcoOneYearCost * (1+0.15);
-            ultraDiskTcoThreeYearCost = ultraDiskTcoTwoYearCost * (1+0.15);
-            ultraDiskTcoFourYearCost = ultraDiskTcoThreeYearCost * (1+0.15);
-            ultraDiskTcoFiveYearCost = ultraDiskTcoFourYearCost * (1+0.15);
-
-            const ultraDiskTcoCost = {
-              oneYear: ultraDiskTcoOneYearCost,
-              twoYear: ultraDiskTcoTwoYearCost,
-              threeYear: ultraDiskTcoThreeYearCost,
-              fourYear: ultraDiskTcoFourYearCost,
-              fiveYear: ultraDiskTcoFiveYearCost
-            }
-
-            const cumulativeUltraDiskCost = {
-              oneYear: ultraDiskTcoCost.oneYear,
-              twoYear: (ultraDiskTcoCost.twoYear + ultraDiskTcoCost.oneYear),
-              threeYear: (ultraDiskTcoCost.threeYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.twoYear),
-              fourYear: (ultraDiskTcoCost.fourYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear),
-              fiveYear: (ultraDiskTcoCost.fiveYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.fourYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear)
-            }
-
-            // if (totalCostHtmlField) {
-            //   totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
-            // }
-
-            return cumulativeUltraDiskCost;
+          if (ultraDiskYearOneCostHtml) {
+            ultraDiskYearOneCostHtml.textContent = numberToDollars(ultraDiskCost);
           }
 
-          // Calculate the Provsioned Capacity Ultra Disk
-          function calculateUltraDiskProvsionedCapacity() {
-            ultraDiskProvsionedCapacity = userInputValue * ULTRA_DISK_MAX_READ_IOPS;
+          ultraDiskTcoOneYearCost = ultraDiskCost;
+          ultraDiskTcoTwoYearCost = ultraDiskTcoOneYearCost * (1 + 0.15);
+          ultraDiskTcoThreeYearCost = ultraDiskTcoTwoYearCost * (1 + 0.15);
+          ultraDiskTcoFourYearCost = ultraDiskTcoThreeYearCost * (1 + 0.15);
+          ultraDiskTcoFiveYearCost = ultraDiskTcoFourYearCost * (1 + 0.15);
 
-            const ultraDiskCapHtml = document.getElementById('ultra-disk-cap');
-
-            if (ultraDiskCapHtml) {
-              ultraDiskCapHtml.textContent = ultraDiskProvsionedCapacity;
-            }
-
-            return ultraDiskProvsionedCapacity;
+          const ultraDiskTcoCost = {
+            oneYear: ultraDiskTcoOneYearCost,
+            twoYear: ultraDiskTcoTwoYearCost,
+            threeYear: ultraDiskTcoThreeYearCost,
+            fourYear: ultraDiskTcoFourYearCost,
+            fiveYear: ultraDiskTcoFiveYearCost
           }
 
-          // Calculate the Cost of PremiumSsd Year one
-          function calculatePremiumSsdCost() {
-            premiumSsdCost = (userInputValue * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (userInputValue * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS ) / 1024);
-
-            const premiumSsdYearOneCostHtml = document.getElementById('premium-ssd-year-one');
-
-            if (premiumSsdYearOneCostHtml) {
-              premiumSsdYearOneCostHtml.textContent = numberToDollars(premiumSsdCost);
-            }
-
-            premiumSsdOneYearCost = premiumSsdCost;
-            premiumSsdTwoYearCost = premiumSsdOneYearCost * (1+0.15);
-            premiumSsdThreeYearCost = premiumSsdTwoYearCost * (1+0.15);
-            premiumSsdFourYearCost = premiumSsdThreeYearCost * (1+0.15);
-            premiumSsdFiveYearCost = premiumSsdFourYearCost * (1+0.15);
-
-            const premiumSsdTcoCost = {
-              oneYear: premiumSsdOneYearCost,
-              twoYear: premiumSsdTwoYearCost,
-              threeYear: premiumSsdThreeYearCost,
-              fourYear: premiumSsdFourYearCost,
-              fiveYear: premiumSsdFiveYearCost
-            }
-
-            const cumulativePremiumSsdCost = {
-              oneYear: premiumSsdTcoCost.oneYear,
-              twoYear: (premiumSsdTcoCost.twoYear + premiumSsdTcoCost.oneYear),
-              threeYear: (premiumSsdTcoCost.threeYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.twoYear),
-              fourYear: (premiumSsdTcoCost.fourYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear),
-              fiveYear: (premiumSsdTcoCost.fiveYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.fourYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear)
-            }
-
-            // if (totalCostHtmlField) {
-            //   totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
-            // }
-
-            console.log(cumulativePremiumSsdCost, 'test');
-
-            return cumulativePremiumSsdCost;
+          const cumulativeUltraDiskCost = {
+            oneYear: ultraDiskTcoCost.oneYear,
+            twoYear: (ultraDiskTcoCost.twoYear + ultraDiskTcoCost.oneYear),
+            threeYear: (ultraDiskTcoCost.threeYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.twoYear),
+            fourYear: (ultraDiskTcoCost.fourYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear),
+            fiveYear: (ultraDiskTcoCost.fiveYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.fourYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear)
           }
 
-          // Calculate the Provsioned Capacity Ultra Disk
-          function calculatepremiumSsdProvsionedCapacity() {
-            premiumSsdProvsionedCapacity = userInputValue * PREMIUM_SSD_READ_IOPS;
-            const premiumSsdCapHtml = document.getElementById('premium-ssd-cap');
+          // if (totalCostHtmlField) {
+          //   totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
+          // }
 
-            if (premiumSsdCapHtml) {
-              premiumSsdCapHtml.textContent = premiumSsdProvsionedCapacity;
-            }
+          return cumulativeUltraDiskCost;
+        }
 
-            return premiumSsdProvsionedCapacity;
+        // Calculate the Provsioned Capacity Ultra Disk
+        function calculateUltraDiskProvsionedCapacity() {
+          ultraDiskProvsionedCapacity = userInputValue * ULTRA_DISK_MAX_READ_IOPS;
+
+          const ultraDiskCapHtml = document.getElementById('ultra-disk-cap');
+
+          if (ultraDiskCapHtml) {
+            ultraDiskCapHtml.textContent = ultraDiskProvsionedCapacity;
           }
 
-          function calculateValuesAndPrint() {
-            calculatepremiumSsdProvsionedCapacity()
-            calculateUltraDiskProvsionedCapacity();
-            calculateAmdProvsionedCapacity();
-            calculateAmdCost();
-            calculateUltraDiskCost();
-            calculatePremiumSsdCost();
+          return ultraDiskProvsionedCapacity;
+        }
+
+        // Calculate the Cost of PremiumSsd Year one
+        function calculatePremiumSsdCost() {
+          premiumSsdCost = (userInputValue * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (userInputValue * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS) / 1024);
+
+          const premiumSsdYearOneCostHtml = document.getElementById('premium-ssd-year-one');
+
+          if (premiumSsdYearOneCostHtml) {
+            premiumSsdYearOneCostHtml.textContent = numberToDollars(premiumSsdCost);
           }
 
-          function calculateTotalCostSavings(baseCost, fiveCost) {
-            console.log(fiveCost, baseCost);
-            return Math.abs(fiveCost - baseCost);
+          premiumSsdOneYearCost = premiumSsdCost;
+          premiumSsdTwoYearCost = premiumSsdOneYearCost * (1 + 0.15);
+          premiumSsdThreeYearCost = premiumSsdTwoYearCost * (1 + 0.15);
+          premiumSsdFourYearCost = premiumSsdThreeYearCost * (1 + 0.15);
+          premiumSsdFiveYearCost = premiumSsdFourYearCost * (1 + 0.15);
+
+          const premiumSsdTcoCost = {
+            oneYear: premiumSsdOneYearCost,
+            twoYear: premiumSsdTwoYearCost,
+            threeYear: premiumSsdThreeYearCost,
+            fourYear: premiumSsdFourYearCost,
+            fiveYear: premiumSsdFiveYearCost
           }
 
-          function calculateTotalCostInPercentage(baseCost, fiveYearCost) {
-            return `${~~((100 * baseCost) / fiveYearCost)}%`;
+          const cumulativePremiumSsdCost = {
+            oneYear: premiumSsdTcoCost.oneYear,
+            twoYear: (premiumSsdTcoCost.twoYear + premiumSsdTcoCost.oneYear),
+            threeYear: (premiumSsdTcoCost.threeYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.twoYear),
+            fourYear: (premiumSsdTcoCost.fourYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear),
+            fiveYear: (premiumSsdTcoCost.fiveYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.fourYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear)
           }
 
-          initListeners();
+          // if (totalCostHtmlField) {
+          //   totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
+          // }
 
-          // get value on keydown Done
-          // convert into number Done
-          // calculate
-          // - Amd for 1 year Done
-          // - Ultra Disk 1 year Done
-          // - Premium SSD 1 year Done
+          console.log(cumulativePremiumSsdCost, 'test');
 
-          // Calculate 5 years cost Done
+          return cumulativePremiumSsdCost;
+        }
 
-          // google.charts.load('current', {'packages':['corechart']});
-          // google.charts.setOnLoadCallback(drawChart);
+        // Calculate the Provsioned Capacity Ultra Disk
+        function calculatepremiumSsdProvsionedCapacity() {
+          premiumSsdProvsionedCapacity = userInputValue * PREMIUM_SSD_READ_IOPS;
+          const premiumSsdCapHtml = document.getElementById('premium-ssd-cap');
 
-          // function drawChart() {
-          //   var data = google.visualization.arrayToDataTable([
-          //     ['Year', 'Ultra Disk', 'Premium SSD' ,'Lightbits' ],
-          //     ['Year One',  1354862.717, 194574.206, 170803.200],
-          //     ['Year Two',  1170, 460, 899],
-          //     ['Year Three',  660, 1120, 90],
-          //     ['Year Four',  1030, 540, 655],
-          //     ['Year Five',  1030, 540, 7777]
-          //   ]);
+          if (premiumSsdCapHtml) {
+            premiumSsdCapHtml.textContent = premiumSsdProvsionedCapacity;
+          }
 
-          //   var options = {
-          //     title: 'Total Cost Savings in 5 years',
-          //     hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-          //     vAxis: {minValue: 0}
-          //   };
+          return premiumSsdProvsionedCapacity;
+        }
 
-          //   var chart = new google.visualization.AreaChart(document.getElementById('line-graph'));
-          //   chart.draw(data, options);
-          // }        
-        });
-      })();
-    </script>
-  </head>
+        function calculateValuesAndPrint() {
+          calculatepremiumSsdProvsionedCapacity()
+          calculateUltraDiskProvsionedCapacity();
+          calculateAmdProvsionedCapacity();
+          calculateAmdCost();
+          calculateUltraDiskCost();
+          calculatePremiumSsdCost();
+        }
 
-  <body>
-    <main>
-      <section class="tco-calculator">
+        function calculateTotalCostSavings(baseCost, fiveCost) {
+          console.log(fiveCost, baseCost);
+          return Math.abs(fiveCost - baseCost);
+        }
+
+        function calculateTotalCostInPercentage(baseCost, fiveYearCost) {
+          return `${~~((100 * baseCost) / fiveYearCost)}%`;
+        }
+
+        initListeners();
+
+        // get value on keydown Done
+        // convert into number Done
+        // calculate
+        // - Amd for 1 year Done
+        // - Ultra Disk 1 year Done
+        // - Premium SSD 1 year Done
+
+        // Calculate 5 years cost Done
+
+        // google.charts.load('current', {'packages':['corechart']});
+        // google.charts.setOnLoadCallback(drawChart);
+
+        // function drawChart() {
+        //   var data = google.visualization.arrayToDataTable([
+        //     ['Year', 'Ultra Disk', 'Premium SSD' ,'Lightbits' ],
+        //     ['Year One',  1354862.717, 194574.206, 170803.200],
+        //     ['Year Two',  1170, 460, 899],
+        //     ['Year Three',  660, 1120, 90],
+        //     ['Year Four',  1030, 540, 655],
+        //     ['Year Five',  1030, 540, 7777]
+        //   ]);
+
+        //   var options = {
+        //     title: 'Total Cost Savings in 5 years',
+        //     hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+        //     vAxis: {minValue: 0}
+        //   };
+
+        //   var chart = new google.visualization.AreaChart(document.getElementById('line-graph'));
+        //   chart.draw(data, options);
+        // }        
+      });
+    })();
+  </script>
+</head>
+
+<body>
+  <main>
+    <section class="tco-calculator">
+      <div class="calculator-input-wrapper">
         <div class="container">
           <div class="intro-block">
-            <h2>See How Much You Can Save on Your Cloud Storage Costs</h2>
-            <p>
-              Native cloud storage on Azure can be up to 7x more expensive than
-              Lightbits. For performance-sensitive, large-scale workloads
-              Lightbits offers the fastest block storage on Azure today with
-              predictable low cost that will not bust your IT budget.
-            </p>
+            <h2>See How Much You Can Save to Run Virtualized Workloads on Azure</h2>
           </div>
-          <div
-            class="calculator citrus-top-border aos-init aos-animate"
-            data-aos="fade-up"
-            data-aos-delay="500"
-          >
-            <div class="calculator-form">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-two">
-                    <div class="form-group-content">
-                      <h6 class="form-group-title">
-                        Provisioned Capacity (TiB)*
-                      </h6>
-                      <p>Select One:</p>
-                    </div>
-                  </div>
-                  <div class="col-two">
-                    <div class="form-group-input">
-                      <div class="btn-new-wrap">
-                        <span class="btn-new btn-new-default">Ultra Disk </span>
-                        <span class="btn-new btn-new-default">Premium SSD </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div class="row">
+            <div class="col-two">
+              <div class="content-wrap">
+                <p>Unlike vSAN, with Lightbits on Azure VMware Solution (AVS) you can scale storage dynamically instead
+                  of over provisioning storage or compute for capacity and application performance. 
+                  Lightbits offers lower, more predictable AVS costs with better performance and unlimited scaling</p>
               </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-two">
-                    <div class="form-group-content">
-                      <h6 class="form-group-title">
-                        Provisioned Capacity (TiB)*
-                      </h6>
-                    </div>
+            </div>
+            <div class="col-two">
+              <div class="input-outer-wrap">
+                <h4>Provisioned Capacity (TiB)*</h4>
+                <div class="form-group-input">
+                  <div class="input-group">
+                    <input type="number" id="tib-input" aria-label="Provisioned Capacity" value="100" placeholder="Enter a number"
+                      maxlength="12" />
                   </div>
-                  <div class="col-two">
-                    <div class="form-group-input">
-                      <div class="input-group">
-                        <input
-                          type="number"
-                          id="tib-input"
-                          aria-label="Provisioned Capacity"
-                          placeholder="Enter a number"
-                          maxlength="12"
-                          value=""
-                        />
-                      </div>
-                    </div>
+                  <div class="btn-wrap">
+                    <span class="btn-new btn-new-default">
+                      Calculate
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="calculator-content">
-              <div class="calculation">
+          </div>
+        </div>
+      </div>
+      <div class="calculation-result-wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="col-two">
+              <div class="calculation-number">
                 <h2>
                   Your Total Cost Savings:
                   <span class="calculation-cost" id="total-cost">298,735.864</span>
                 </h2>
+              </div>
+            </div>
+            <div class="col-two">
+              <div class="calculation-number">
                 <h2>
                   Your Total Savings:
                   <span class="calculation-percentage">84</span>
                 </h2>
-                <p>Lightbits outperforms Ultra Disk by approximately 3.3X</p>
-                <div class="btn-new-wrap">
-                  <a href="/" class="btn-new btn-new-default">Contact Sales</a>
-                  <a href="/" class="btn-new btn-new-transparent"
-                    >View Key Assumptions</a
-                  >
-                </div>
               </div>
-              <div class="results">
-                <h3>TCO - Cumulative (15% yoy)</h3>
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>Year's</th>
-                      <th>1 year</th>
-                      <th>2 year</th>
-                      <th>3 year</th>
-                      <th>4 year</th>
-                      <th>5 year</th>
-                    </tr>
-                    <tr>
-                      <th>Ultra Disk</th>
-                      <td id="ultra-disk-year-one">0</td>
-                      <td id="ultra-disk-year-two">0</td>
-                      <td id="ultra-disk-year-three">0</td>
-                      <td id="ultra-disk-year-four">0</td>
-                      <td id="ultra-disk-year-five">0</td>
-                    </tr>
-                    <tr>
-                      <th>Premiun SSD v2</th>
-                      <td id="premium-ssd-year-one">0</td>
-                      <td id="premium-ssd-year-two">0</td>
-                      <td id="premium-ssd-year-three">0</td>
-                      <td id="premium-ssd-year-four">0</td>
-                      <td id="premium-ssd-year-five">0</td>
-                    </tr>
-                    <tr>
-                      <th>Lightbits</th>
-                      <td id="amd-cost-year-one">0</td>
-                      <td id="amd-cost-year-two">0</td>
-                      <td id="amd-cost-year-three">0</td>
-                      <td id="amd-cost-year-four">0</td>
-                      <td id="amd-cost-year-five">0</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="results">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>Max IOPS Per Provsioned Capacity</th>
-                    </tr>
-                    <tr>
-                      <th>Ultra Disk</th>
-                      <td id="ultra-disk-cap">0</td>
-                    </tr>
-                    <tr>
-                      <th>Premiun SSD v2</th>
-                      <td id="premium-ssd-cap">0</td>
-                    </tr>
-                    <tr>
-                      <th>Lightbits</th>
-                      <td id="amd-cap">0</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="calculator-graph-wrap">
-                <div class="row">
-                  <div class="col-two">
-                    <div id="line-graph">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="calculator-action-wrapper">
+        <div class="container">
+          <div class="button-wrapper">
+            <a href="/contact-us" class="btn-new btn-new-default">Ultra Disk </a>
+            <a href="/" class="btn-link-yellow">View Key Assumptions <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="27" height="28" viewBox="0 0 27 28" fill="none">
+                <g clip-path="url(#clip0_103_13)">
+                  <path d="M19.6506 14H6.55005" stroke="#FFCF19" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14.1921 8.5415L19.6507 14.0001L14.1921 19.4587" stroke="#FFCF19" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_103_13">
+                    <rect width="18.527" height="18.527" fill="white" transform="translate(13.1006 0.899414) rotate(45)"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </span></a>
+          </div>
+        </div>
+      </div>
 
-                    </div>
+      <div class="calculator">
+        <div class="container">
+          <div class="calculator-content">
+            <div class="results">
+              <h3>TCO - Cumulative (15% yoy)</h3>
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Year's</th>
+                    <th>1 year</th>
+                    <th>2 year</th>
+                    <th>3 year</th>
+                    <th>4 year</th>
+                    <th>5 year</th>
+                  </tr>
+                  <tr>
+                    <th>Ultra Disk</th>
+                    <td id="ultra-disk-year-one">0</td>
+                    <td id="ultra-disk-year-two">0</td>
+                    <td id="ultra-disk-year-three">0</td>
+                    <td id="ultra-disk-year-four">0</td>
+                    <td id="ultra-disk-year-five">0</td>
+                  </tr>
+                  <tr>
+                    <th>Premiun SSD v2</th>
+                    <td id="premium-ssd-year-one">0</td>
+                    <td id="premium-ssd-year-two">0</td>
+                    <td id="premium-ssd-year-three">0</td>
+                    <td id="premium-ssd-year-four">0</td>
+                    <td id="premium-ssd-year-five">0</td>
+                  </tr>
+                  <tr>
+                    <th>Lightbits</th>
+                    <td id="amd-cost-year-one">0</td>
+                    <td id="amd-cost-year-two">0</td>
+                    <td id="amd-cost-year-three">0</td>
+                    <td id="amd-cost-year-four">0</td>
+                    <td id="amd-cost-year-five">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="results">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Max IOPS Per Provsioned Capacity</th>
+                  </tr>
+                  <tr>
+                    <th>Ultra Disk</th>
+                    <td id="ultra-disk-cap">0</td>
+                  </tr>
+                  <tr>
+                    <th>Premiun SSD v2</th>
+                    <td id="premium-ssd-cap">0</td>
+                  </tr>
+                  <tr>
+                    <th>Lightbits</th>
+                    <td id="amd-cap">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="calculator-graph-wrap">
+              <div class="row">
+                <div class="col-two">
+                  <div id="line-graph">
+  
                   </div>
-                  <div class="col-two">
-                    <div id="bar-graph">
-
-                    </div>
+                </div>
+                <div class="col-two">
+                  <div id="bar-graph">
+  
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <section class="content-modal">
-        <div class="container">
-            <span class="close-button"></span>
-            <div class="content-modal-item">
-                <div class="content-wrap">
-                    <h3>Key Assumptions</h3>
-                    <ul>
-                      <li>Data Reduction: 3:1: AchieveN through compression, thin provisioning with auto-scaling, space-efficient snapshots, anN clonesM</li>
-                      <li>Highly Available w/ 2 replicas: Ensures high availability of Nata with two replicasM</li>
-                      <li>Azure VMs: ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM</li>
-                      <li>Annual Expected Growth: Accounts for a projecteN annual growth rate of 15%M</li>
-                      <li>LRS Azure: Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
-                      <li>Premium SSD v2 Assumptions: Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+      </div>
     </section>
-    </main>
-  </body>
+    <section class="content-modal">
+      <div class="container">
+        <span class="close-button"></span>
+        <div class="content-modal-item">
+          <div class="content-wrap">
+            <h3>Key Assumptions</h3>
+            <ul>
+              <li>Data Reduction: 3:1: AchieveN through compression, thin provisioning with auto-scaling,
+                space-efficient snapshots, anN clonesM</li>
+              <li>Highly Available w/ 2 replicas: Ensures high availability of Nata with two replicasM</li>
+              <li>Azure VMs: ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM
+              </li>
+              <li>Annual Expected Growth: Accounts for a projecteN annual growth rate of 15%M</li>
+              <li>LRS Azure: Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
+              <li>Premium SSD v2 Assumptions: Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>
