@@ -56,13 +56,13 @@
     }
 
     .btn-new-transparent {
-      color: #5f305e;
-      margin-top: 1.5rem;
+      color: #BA9673;
+      border-color: #BA9673;
     }
 
     .btn-new-transparent:hover {
       color: #fff;
-      background-color: #5f305e;
+      background-color: #BA9673;
     }
 
     .btn-link-yellow {
@@ -99,6 +99,13 @@
       max-width: 50%;
     }
 
+    @media (max-width: 991px) {
+      .col-two {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+
     .intro-block h2 {
       color: #281529;
       margin-bottom: 1.5rem;
@@ -116,14 +123,6 @@
       margin: 0 auto;
     }
 
-    .calculation {
-      text-align: center;
-    }
-
-    .calculation h2:not(:last-child) {
-      margin-bottom: 1rem;
-    }
-
     .calculator-form {
       padding: 2rem 0;
     }
@@ -137,7 +136,7 @@
       width: 100%;
       letter-spacing: 1px;
       padding: 1rem;
-      height: 4.5rem;
+      height: 5.3rem;
       outline: none;
       border-width: 0.1rem;
       border-style: solid;
@@ -152,7 +151,6 @@
     input[type="number"]::-webkit-inner-spin-button {
       display: none;
     }
-
 
     .content-modal {
       position: fixed;
@@ -199,7 +197,7 @@
       border-radius: 1rem;
       margin: auto;
       position: relative;
-      background-color: #fff;
+      background-color: #EDE7ED;
     }
 
     .content-modal-item .content-wrap {
@@ -220,6 +218,7 @@
       font-style: normal;
       font-weight: 400;
       line-height: 1.2; 
+      color: #442744;
       letter-spacing: 1px;
       border-bottom: 1px solid #790977;
     }
@@ -263,6 +262,11 @@
     table td,
     table th {
       padding: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .results h3 {
+      font-size: 3rem;
     }
 
     .calculator-input-wrapper {
@@ -284,16 +288,23 @@
       border: 2px solid #790977;
       padding: 4rem;
       background: #fff;
-      margin-left: 10rem;
+      margin-left: 20px;
     }
 
     .calculator-input-wrapper .input-outer-wrap h4 {
       font-size: 20px;
       font-style: normal;
-      font-weight: 700;
+      font-weight: 400;
       line-height: 1.2;
       letter-spacing: 1px;
       margin-bottom: 2rem;
+    }
+
+    .calculator-input-wrapper .input-outer-wrap h4 strong {
+      font-size: inherit;
+      font-weight: 700;
+      line-height: inherit;
+      letter-spacing: inherit;
     }
 
     .input-outer-wrap .form-group-input {
@@ -311,6 +322,7 @@
       padding: 5rem 0;
       background: rgba(95, 48, 94, 1);
       color: #fff;
+      text-align: center;
     }
 
     .calculation-number h2 {
@@ -333,6 +345,24 @@
       color: #FFCF19;
     }
 
+    .calculation-result-wrapper h5 {
+      font-size: 1.9rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      margin-top: 2.5rem;
+    }
+
+    .calculation-result-wrapper h5 span {
+      font-size: 3rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      color: #FFCF19;
+    }
+
     .calculator-action-wrapper {
       padding: 3.5rem 0;
       background: rgba(68, 39, 68, 1);
@@ -341,6 +371,45 @@
 
     .calculator-action-wrapper .button-wrapper a {
       margin: 0 2.5rem;
+    }
+
+    .input-item.divider-bottom {
+      padding-bottom: 5rem;
+      border-bottom: 1px solid #790977;
+      margin-bottom: 5rem;
+    }
+
+    @media (max-width: 991px) {
+      .calculator-input-wrapper .input-outer-wrap {
+        margin-left: 0;
+        margin-top: 3rem;
+      }
+      .calculator-input-wrapper {
+        padding: 8rem 0;
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .calculator-input-wrapper .input-outer-wrap {
+        padding: 2.5rem;
+      }
+      .input-item.divider-bottom {
+        padding-bottom: 3rem;
+        margin-bottom: 3rem;
+      }
+      .calculator-input-wrapper {
+        padding: 5rem 0;
+      }
+    }
+    
+    @media (min-width: 1280px) {
+      .calculator-input-wrapper .input-outer-wrap {
+        margin-left: 10rem;
+      }
+    }
+
+    .d-none {
+      display: none;
     }
   </style>
 
@@ -357,6 +426,8 @@
         const AMD_TB_PER_MONTH = 142.336;
         const ULTRA_DISK_TB_PER_MONTH = 122.59328;
         const PREMIUM_SSD_TB_PER_MONTH = 82.944;
+        const VSAN_AV36P = 232.448;
+        const VSAN_AV64P = 416.768;
 
         const AMD_MAX_READ_IOPS = 66000;
         const ULTRA_DISK_MAX_READ_IOPS = 20000;
@@ -369,6 +440,9 @@
         const AMD_MBPS_MONTH = 0;
         const ULTRA_DISK_MBPS_MONTH = 0.34967;
         const PREMIUM_SSD_MBPS_MONTH = 0.04100;
+
+        const VSAN_AV36P_AVS_COST_MONTH = 1300;
+        const VSAN_AV64P_AVS_COST_MONTH = 1300;
 
         const YEARLY_INFLAMATION_VALUE = (1 + 0.15);
 
@@ -397,6 +471,18 @@
         var premiumSsdThreeYearCost = 0;
         var premiumSsdFourYearCost = 0;
         var premiumSsdFiveYearCost = 0;
+
+        var av36OneYearCost = 0;
+        var av36TwoYearCost = 0;
+        var av36ThreeYearCost = 0;
+        var av36FourYearCost = 0;
+        var av36FiveYearCost = 0;
+
+        var av64OneYearCost = 0;
+        var av64TwoYearCost = 0;
+        var av64ThreeYearCost = 0;
+        var av64FourYearCost = 0;
+        var av64FiveYearCost = 0;
 
         var totalCostHtmlField = document.getElementById('total-cost');
 
@@ -447,7 +533,7 @@
               var ultraDiskTotalCostInPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, ultraDiskResult.fiveYear);
               var premiumSsdTotalCostPercentage = calculateTotalCostInPercentage(amdResult.fiveYear, premiumSsdResults.fiveYear);
 
-              console.log(ultraDiskTotalCostInPercentage, premiumSsdTotalCostPercentage);
+              // console.log(ultraDiskTotalCostInPercentage, premiumSsdTotalCostPercentage);
 
               calculateValuesAndPrint();
             });
@@ -459,16 +545,18 @@
           var amdCost = userInputValue * AMD_TB_PER_MONTH * MONTHS;
 
           const amdYearOneCostHtml = document.getElementById('amd-cost-year-one');
+          const amdYearTwoCostHtml = document.getElementById('amd-cost-year-two');
+          const amdYearThreeCostHtml = document.getElementById('amd-cost-year-three');
+          const amdYearFourCostHtml = document.getElementById('amd-cost-year-four');
+          const amdYearFiveCostHtml = document.getElementById('amd-cost-year-five');
 
-          if (amdYearOneCostHtml) {
-            amdYearOneCostHtml.textContent = numberToDollars(amdCost);
-          }
-
+          
           amdCostOneYear = amdCost;
           amdCostTwoYear = amdCostOneYear * (1 + 0.15);
           amdCostThreeYear = amdCostTwoYear * (1 + 0.15);
           amdCostFourYear = amdCostThreeYear * (1 + 0.15);
           amdCostFiveYear = amdCostFourYear * (1 + 0.15);
+       
 
           const amdTcoCost = {
             oneYear: amdCostOneYear,
@@ -486,12 +574,21 @@
             fiveYear: (amdTcoCost.fiveYear + amdTcoCost.oneYear + amdTcoCost.fourYear + amdTcoCost.threeYear + amdTcoCost.twoYear)
           }
 
-          // if (totalCostHtmlField) { 
-          //   totalCostHtmlField.textContent = numberToDollars(amdCost);
-          // }
+             
+          if (amdYearOneCostHtml) {
+            amdYearOneCostHtml.textContent = numberToDollars(cumulativeAmdCost.oneYear);
+            amdYearTwoCostHtml.textContent = numberToDollars(cumulativeAmdCost.twoYear);
+            amdYearThreeCostHtml.textContent = numberToDollars(cumulativeAmdCost.threeYear);
+            amdYearFourCostHtml.textContent = numberToDollars(cumulativeAmdCost.fourYear);
+            amdYearFiveCostHtml.textContent = numberToDollars(cumulativeAmdCost.fiveYear);
+          }
 
+          const amdCalculations = {
+            tcoCost : amdTcoCost,
+            cumulativeCost : cumulativeAmdCost,
+          }
 
-          return cumulativeAmdCost;
+          return amdCalculations;
         }
 
         // Calculate the Provsioned Capacity AMD
@@ -512,17 +609,17 @@
           var ultraDiskCost = (userInputValue * ULTRA_DISK_TB_PER_MONTH * MONTHS) + (userInputValue * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * ULTRA_DISK_MAX_READ_IOPS * ULTRA_DISK_MBPS_MONTH * MONTHS) / 1024);
 
           const ultraDiskYearOneCostHtml = document.getElementById('ultra-disk-year-one');
-
-          if (ultraDiskYearOneCostHtml) {
-            ultraDiskYearOneCostHtml.textContent = numberToDollars(ultraDiskCost);
-          }
-
+          const ultraDiskYearTwoCostHtml = document.getElementById('ultra-disk-year-two');
+          const ultraDiskYearThreeCostHtml = document.getElementById('ultra-disk-year-three');
+          const ultraDiskYearFourCostHtml = document.getElementById('ultra-disk-year-four');
+          const ultraDiskYearFiveCostHtml = document.getElementById('ultra-disk-year-five');
+          
           ultraDiskTcoOneYearCost = ultraDiskCost;
           ultraDiskTcoTwoYearCost = ultraDiskTcoOneYearCost * (1 + 0.15);
           ultraDiskTcoThreeYearCost = ultraDiskTcoTwoYearCost * (1 + 0.15);
           ultraDiskTcoFourYearCost = ultraDiskTcoThreeYearCost * (1 + 0.15);
           ultraDiskTcoFiveYearCost = ultraDiskTcoFourYearCost * (1 + 0.15);
-
+         
           const ultraDiskTcoCost = {
             oneYear: ultraDiskTcoOneYearCost,
             twoYear: ultraDiskTcoTwoYearCost,
@@ -539,11 +636,21 @@
             fiveYear: (ultraDiskTcoCost.fiveYear + ultraDiskTcoCost.oneYear + ultraDiskTcoCost.fourYear + ultraDiskTcoCost.threeYear + ultraDiskTcoCost.twoYear)
           }
 
-          // if (totalCostHtmlField) {
-          //   totalCostHtmlField.textContent = numberToDollars(ultraDiskCost);
-          // }
+          if (ultraDiskYearOneCostHtml) {
+            ultraDiskYearOneCostHtml.textContent = numberToDollars(cumulativeUltraDiskCost.oneYear);
+            ultraDiskYearTwoCostHtml.textContent = numberToDollars(cumulativeUltraDiskCost.twoYear);
+            ultraDiskYearThreeCostHtml.textContent = numberToDollars(cumulativeUltraDiskCost.threeYear);
+            ultraDiskYearFourCostHtml.textContent = numberToDollars(cumulativeUltraDiskCost.fourYear);
+            ultraDiskYearFiveCostHtml.textContent = numberToDollars(cumulativeUltraDiskCost.fiveYear);
+          }
 
-          return cumulativeUltraDiskCost;
+
+          const ultraDiskCalculations = {
+            tcoCost : ultraDiskTcoCost,
+            cumulativeCost : cumulativeUltraDiskCost,
+          }
+
+          return ultraDiskCalculations;
         }
 
         // Calculate the Provsioned Capacity Ultra Disk
@@ -564,17 +671,18 @@
           premiumSsdCost = (userInputValue * PREMIUM_SSD_TB_PER_MONTH * MONTHS) + (userInputValue * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_IOPS_MONTH * MONTHS) + ((userInputValue * 2 * PREMIUM_SSD_READ_IOPS * PREMIUM_SSD_MBPS_MONTH * MONTHS) / 1024);
 
           const premiumSsdYearOneCostHtml = document.getElementById('premium-ssd-year-one');
+          const premiumSsdYearTwoCostHtml = document.getElementById('premium-ssd-year-two');
+          const premiumSsdYearThreeCostHtml = document.getElementById('premium-ssd-year-three');
+          const premiumSsdYearFourCostHtml = document.getElementById('premium-ssd-year-four');
+          const premiumSsdYearFiveCostHtml = document.getElementById('premium-ssd-year-five');
 
-          if (premiumSsdYearOneCostHtml) {
-            premiumSsdYearOneCostHtml.textContent = numberToDollars(premiumSsdCost);
-          }
-
+          
           premiumSsdOneYearCost = premiumSsdCost;
           premiumSsdTwoYearCost = premiumSsdOneYearCost * (1 + 0.15);
           premiumSsdThreeYearCost = premiumSsdTwoYearCost * (1 + 0.15);
           premiumSsdFourYearCost = premiumSsdThreeYearCost * (1 + 0.15);
           premiumSsdFiveYearCost = premiumSsdFourYearCost * (1 + 0.15);
-
+          
           const premiumSsdTcoCost = {
             oneYear: premiumSsdOneYearCost,
             twoYear: premiumSsdTwoYearCost,
@@ -591,13 +699,20 @@
             fiveYear: (premiumSsdTcoCost.fiveYear + premiumSsdTcoCost.oneYear + premiumSsdTcoCost.fourYear + premiumSsdTcoCost.threeYear + premiumSsdTcoCost.twoYear)
           }
 
-          // if (totalCostHtmlField) {
-          //   totalCostHtmlField.textContent = numberToDollars(premiumSsdCost);
-          // }
+          if (premiumSsdYearOneCostHtml) {
+            premiumSsdYearOneCostHtml.textContent = numberToDollars(cumulativePremiumSsdCost.oneYear);
+            premiumSsdYearTwoCostHtml.textContent = numberToDollars(cumulativePremiumSsdCost.twoYear);
+            premiumSsdYearThreeCostHtml.textContent = numberToDollars(cumulativePremiumSsdCost.threeYear);
+            premiumSsdYearFourCostHtml.textContent = numberToDollars(cumulativePremiumSsdCost.fourYear);
+            premiumSsdYearFiveCostHtml.textContent = numberToDollars(cumulativePremiumSsdCost.fiveYear);
+          }
 
-          console.log(cumulativePremiumSsdCost, 'test');
-
-          return cumulativePremiumSsdCost;
+          const premiumSsdCalculations = {
+            tcoCost : premiumSsdTcoCost,
+            cumulativeCost : cumulativePremiumSsdCost,
+          }
+          
+          return premiumSsdCalculations;
         }
 
         // Calculate the Provsioned Capacity Ultra Disk
@@ -612,6 +727,101 @@
           return premiumSsdProvsionedCapacity;
         }
 
+        function calculateAv36Cost() {
+          var avs36Cost = (userInputValue * VSAN_AV36P * 12) + (12 * VSAN_AV36P_AVS_COST_MONTH);
+
+          const av36YearOneCostHtml = document.getElementById('av36-cost-year-one');
+          const av36YearTwoCostHtml = document.getElementById('av36-cost-year-two');
+          const av36YearThreeCostHtml = document.getElementById('av36-cost-year-three');
+          const av36YearFourCostHtml = document.getElementById('av36-cost-year-four');
+          const av36YearFiveCostHtml = document.getElementById('av36-cost-year-five');
+
+          av36OneYear = avs36Cost;
+          av36TwoYear =  av36OneYear * (1 + 0.15);
+          av36ThreeYear =  av36TwoYear * (1 + 0.15);
+          av36FourYear =  av36ThreeYear * (1 + 0.15);
+          av36FiveYear =  av36FourYear * (1 + 0.15);
+
+          const av36TcoCost = {
+            oneYear: av36OneYear,
+            twoYear: av36TwoYear,
+            threeYear: av36ThreeYear,
+            fourYear: av36FourYear,
+            fiveYear: av36FiveYear
+          }
+
+          const cumulativeAv36Cost = {
+            oneYear: av36TcoCost.oneYear,
+            twoYear: (av36TcoCost.twoYear + av36TcoCost.oneYear),
+            threeYear: (av36TcoCost.threeYear + av36TcoCost.oneYear + av36TcoCost.twoYear),
+            fourYear: (av36TcoCost.fourYear + av36TcoCost.oneYear + av36TcoCost.threeYear + av36TcoCost.twoYear),
+            fiveYear: (av36TcoCost.fiveYear + av36TcoCost.oneYear + av36TcoCost.fourYear + av36TcoCost.threeYear + av36TcoCost.twoYear)
+          }
+
+          if (av36YearOneCostHtml) {
+            av36YearOneCostHtml.textContent = numberToDollars(cumulativeAv36Cost.oneYear);
+            av36YearTwoCostHtml.textContent = numberToDollars(cumulativeAv36Cost.twoYear);
+            av36YearThreeCostHtml.textContent = numberToDollars(cumulativeAv36Cost.threeYear);
+            av36YearFourCostHtml.textContent = numberToDollars(cumulativeAv36Cost.fourYear);
+            av36YearFiveCostHtml.textContent = numberToDollars(cumulativeAv36Cost.fiveYear);
+          }
+
+          const av36Calculations = {
+            tcoCost : av36TcoCost,
+            cumulativeCost :cumulativeAv36Cost,
+          }
+
+          return av36Calculations;
+        }
+
+        function calculateAv64Cost() {
+          var avs64Cost = (userInputValue * VSAN_AV64P * 12) + (12 * VSAN_AV64P_AVS_COST_MONTH);
+
+          const av64YearOneCostHtml = document.getElementById('av64-cost-year-one');
+          const av64YearTwoCostHtml = document.getElementById('av64-cost-year-two');
+          const av64YearThreeCostHtml = document.getElementById('av64-cost-year-three');
+          const av64YearFourCostHtml = document.getElementById('av64-cost-year-four');
+          const av64YearFiveCostHtml = document.getElementById('av64-cost-year-five');
+
+          
+          av64OneYear = avs64Cost;
+          av64TwoYear =  av64OneYear * (1 + 0.15);
+          av64ThreeYear =  av64TwoYear * (1 + 0.15);
+          av64FourYear =  av64ThreeYear * (1 + 0.15);
+          av64FiveYear =  av64FourYear * (1 + 0.15);
+
+          const av64TcoCost = {
+            oneYear: av64OneYear,
+            twoYear: av64TwoYear,
+            threeYear: av64ThreeYear,
+            fourYear: av64FourYear,
+            fiveYear: av64FiveYear
+          }
+
+          const cumulativeAv64Cost = {
+            oneYear: av64TcoCost.oneYear,
+            twoYear: (av64TcoCost.twoYear + av64TcoCost.oneYear),
+            threeYear: (av64TcoCost.threeYear + av64TcoCost.oneYear + av64TcoCost.twoYear),
+            fourYear: (av64TcoCost.fourYear + av64TcoCost.oneYear + av64TcoCost.threeYear + av64TcoCost.twoYear),
+            fiveYear: (av64TcoCost.fiveYear + av64TcoCost.oneYear + av64TcoCost.fourYear + av64TcoCost.threeYear + av64TcoCost.twoYear)
+          }
+
+          if (av64YearOneCostHtml) {
+            av64YearOneCostHtml.textContent = numberToDollars(cumulativeAv64Cost.oneYear);
+            av64YearTwoCostHtml.textContent = numberToDollars(cumulativeAv64Cost.twoYear);
+            av64YearThreeCostHtml.textContent = numberToDollars(cumulativeAv64Cost.threeYear);
+            av64YearFourCostHtml.textContent = numberToDollars(cumulativeAv64Cost.fourYear);
+            av64YearFiveCostHtml.textContent = numberToDollars(cumulativeAv64Cost.fiveYear);
+          }
+
+          const av64Calculations = {
+            tcoCost : av64TcoCost,
+            cumulativeCost :cumulativeAv64Cost,
+          }
+
+          return av64Calculations;
+        }
+
         function calculateValuesAndPrint() {
           calculatepremiumSsdProvsionedCapacity()
           calculateUltraDiskProvsionedCapacity();
@@ -619,10 +829,11 @@
           calculateAmdCost();
           calculateUltraDiskCost();
           calculatePremiumSsdCost();
+          calculateAv36Cost();
+          calculateAv64Cost();
         }
 
         function calculateTotalCostSavings(baseCost, fiveCost) {
-          console.log(fiveCost, baseCost);
           return Math.abs(fiveCost - baseCost);
         }
 
@@ -658,28 +869,28 @@
 
         // Calculate 5 years cost Done
 
-        // google.charts.load('current', {'packages':['corechart']});
-        // google.charts.setOnLoadCallback(drawChart);
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
 
-        // function drawChart() {
-        //   var data = google.visualization.arrayToDataTable([
-        //     ['Year', 'Ultra Disk', 'Premium SSD' ,'Lightbits' ],
-        //     ['Year One',  1354862.717, 194574.206, 170803.200],
-        //     ['Year Two',  1170, 460, 899],
-        //     ['Year Three',  660, 1120, 90],
-        //     ['Year Four',  1030, 540, 655],
-        //     ['Year Five',  1030, 540, 7777]
-        //   ]);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ['Year', 'Ultra Disk', 'Premium SSD' ,'Lightbits' ],
+            ['Year One',  1354862.717, 194574.206, 170803.200],
+            ['Year Two',  1170, 460, 899],
+            ['Year Three',  660, 1120, 90],
+            ['Year Four',  1030, 540, 655],
+            ['Year Five',  1030, 540, 7777]
+          ]);
 
-        //   var options = {
-        //     title: 'Total Cost Savings in 5 years',
-        //     hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-        //     vAxis: {minValue: 0}
-        //   };
+          var options = {
+            title: 'Total Cost Savings in 5 years',
+            hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+            vAxis: {minValue: 0}
+          };
 
-        //   var chart = new google.visualization.AreaChart(document.getElementById('line-graph'));
-        //   chart.draw(data, options);
-        // }        
+          var chart = new google.visualization.AreaChart(document.getElementById('line-graph'));
+          chart.draw(data, options);
+        }        
       });
     })();
 
@@ -704,16 +915,29 @@
             </div>
             <div class="col-two">
               <div class="input-outer-wrap">
-                <h4>Provisioned Capacity (TiB)*</h4>
-                <div class="form-group-input">
-                  <div class="input-group">
-                    <input type="number" id="tib-input" aria-label="Provisioned Capacity" value="100" placeholder="Enter a number"
-                      maxlength="12" />
-                  </div>
-                  <div class="btn-wrap">
+                <div class="input-item divider-bottom d-none">
+                  <h4><strong>Storage Type*–</strong> Please select one</h4>
+                  <div class="form-group-input">
                     <span class="btn-new btn-new-default">
-                      Calculate
+                      Ultra Disk
                     </span>
+                    <span class="btn-new btn-new-transparent">
+                      Premium SSD v2
+                    </span>
+                  </div>
+                </div>
+                <div class="input-item">
+                  <h4><strong>Provisioned Capacity (TiB)*</strong></h4>
+                  <div class="form-group-input">
+                    <div class="input-group">
+                      <input type="number" id="tib-input" aria-label="Provisioned Capacity" value="100" placeholder="Enter a number"
+                        maxlength="12" />
+                    </div>
+                    <div class="btn-wrap d-none">
+                      <span class="btn-new btn-new-default">
+                        Calculate
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -741,12 +965,17 @@
               </div>
             </div>
           </div>
+          <div class="calculation-number">
+            <h5>
+              Lightbits outperforms Premium SSD v2 by approximately <span>4.4X</span>.
+            </h5>
+          </div>
         </div>
       </div>
       <div class="calculator-action-wrapper">
         <div class="container">
           <div class="button-wrapper">
-            <a href="/contact-us" class="btn-new btn-new-default">Ultra Disk </a>
+            <a href="/contact-us" class="btn-new btn-new-default">Contact Sales</a>
             <a href="/" class="btn-link-yellow" id="key-points">View Key Assumptions <span>
               <svg xmlns="http://www.w3.org/2000/svg" width="27" height="28" viewBox="0 0 27 28" fill="none">
                 <g clip-path="url(#clip0_103_13)">
@@ -766,7 +995,7 @@
 
       <div class="calculator">
         <div class="container">
-          <div class="calculator-content">
+          <div class="calculator-content ">
             <div class="results">
               <h3>TCO - Cumulative (15% yoy)</h3>
               <table>
@@ -803,6 +1032,22 @@
                     <td id="amd-cost-year-four">0</td>
                     <td id="amd-cost-year-five">0</td>
                   </tr>
+                  <tr>
+                    <th>Avs 36</th>
+                    <td id="av36-cost-year-one">0</td>
+                    <td id="av36-cost-year-two">0</td>
+                    <td id="av36-cost-year-three">0</td>
+                    <td id="av36-cost-year-four">0</td>
+                    <td id="av36-cost-year-five">0</td>
+                  </tr>
+                  <tr>
+                    <th>Avs 64</th>
+                    <td id="av64-cost-year-one">0</td>
+                    <td id="av64-cost-year-two">0</td>
+                    <td id="av64-cost-year-three">0</td>
+                    <td id="av64-cost-year-four">0</td>
+                    <td id="av64-cost-year-five">0</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -827,17 +1072,17 @@
                 </tbody>
               </table>
             </div>
-            <div class="calculator-graph-wrap">
-              <div class="row">
-                <div class="col-two">
-                  <div id="line-graph">
-  
-                  </div>
+          </div>
+          <div class="calculator-graph-wrap">
+            <div class="row">
+              <div class="col-two">
+                <div id="line-graph">
+
                 </div>
-                <div class="col-two">
-                  <div id="bar-graph">
-  
-                  </div>
+              </div>
+              <div class="col-two">
+                <div id="bar-graph">
+
                 </div>
               </div>
             </div>
