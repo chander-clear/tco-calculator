@@ -103,6 +103,16 @@
       max-width: 50%;
     }
 
+    .col-six {
+      flex: 0 0 60%;
+      max-width: 60%;
+    }
+
+    .col-four {
+      flex: 0 0 40%;
+      max-width: 40%;
+    }
+
     @media (max-width: 991px) {
       .col-two {
         flex: 0 0 100%;
@@ -489,10 +499,7 @@
       display: none;
     }
   </style>
-
-  
 </head>
-
 <body>
   <main>
     <section class="tco-calculator">
@@ -527,7 +534,7 @@
                   <div class="form-group-input">
                     <div class="input-group">
                       <input type="number" id="tib-input" aria-label="Provisioned Capacity" value="100"
-                        placeholder="Enter a number" maxlength="12" />
+                        placeholder="100" maxlength="12" />
                     </div>
                     <div class="btn-wrap d-none">
                       <span class="btn-new btn-new-default">
@@ -544,7 +551,7 @@
       <div class="calculation-result-wrapper">
         <div class="container">
           <div class="row">
-            <div class="col-two">
+            <div class="col-six">
               <div class="calculation-number">
                 <h2>
                   <span>
@@ -554,7 +561,7 @@
                 </h2>
               </div>
             </div>
-            <div class="col-two">
+            <div class="col-four">
               <div class="calculation-number">
                 <h2>
                   <span>
@@ -598,7 +605,7 @@
           </div>
         </div>
         <div class="container">
-          <div class="calculator-content ">
+          <div class="calculator-content d-none ">
             <div class="results">
               <h3>TCO - Cumulative (15% yoy)</h3>
               <table>
