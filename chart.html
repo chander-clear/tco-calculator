@@ -1,0 +1,154 @@
+  <html>
+  <head>
+    <style>
+      .statistics__tooltip {
+        padding: 10px;
+        background-color: #F4F4F4;
+        border-radius: 0.5rem;
+        border: 0;
+        box-shadow: none;
+        position: absolute;
+        top: -100px;
+        left: -130px;
+        outline: none;
+        min-width: 200px;
+      }
+      .statistics__tooltip p {
+        font-size: 11px;
+        color: #000;
+        margin-top: 0;
+      }
+      .statistics__tooltip span {
+        display: inline-block;
+      }
+      .statistics__tooltip .bottom-bar {
+        display: block;
+        height: 6px;
+        background-color: red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        right: 0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      .statistics__tooltip .bottom-bar::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        border-color: #000 transparent transparent transparent;
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        transform: translateX(-50%);
+        z-index: -1;
+      }
+      .tooltip-heading {
+        font-family: Lato;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 100%; 
+        text-transform: uppercase;
+      }
+      .grey-tooltip .tooltip-heading {
+        color: #BA9673;
+      }
+
+      .grey-tooltip .bottom-bar{
+        background-color: #BA9673;
+      }
+      .grey-tooltip .bottom-bar::after{
+        border-color: #BA9673 transparent transparent transparent;
+      }
+      .yellow-tooltip .tooltip-heading {
+        color: #FFCF19;
+      }
+
+      .yellow-tooltip .bottom-bar{
+        background-color: #FFCF19;
+      }
+      .yellow-tooltip .bottom-bar::after{
+        border-color: #FFCF19 transparent transparent transparent;
+      }
+      .purple-tooltip .tooltip-heading {
+        color: #790977;
+      }
+
+      .purple-tooltip .bottom-bar{
+        background-color: #790977;
+      }
+      .purple-tooltip .bottom-bar::after{
+        border-color: #790977 transparent transparent transparent;
+      }
+    </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Create HTML for Custom Tooltip and Content
+      function createTooltipHtml(classNames,year, v32Value, v64Value, lightBitsValue) {
+        var classes = '';
+
+        return `<div class="statistics__tooltip ${classNames}"><p class="tooltip-heading">${year}</p><p>Save Up To <strong>80% More</strong> with Lightbits </p><p>vSAN -AV36P Cost: <span>${v64Value}</span></p><p>vSAN -AV36P Cost: <span>${v32Value}</span></p><p><span>${lightBitsValue}</span></p> <span class="bottom-bar"></span></div>`;
+      }
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Av36p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Av64p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits', { type: 'string', role: 'tooltip', p: { html: true } }],
+          ['YearOne', 294537.600,  createTooltipHtml("grey-tooltip","YearOne", 294537.600), 515721.600, createTooltipHtml("yellow-tooltip","YearOne", 515721.600), 170803.200, createTooltipHtml("purple-tooltip","YearOne", 170803.200)],
+          ['YearTwo', 633255.840, "ttte", 1108801.440,"hhh", 367226.880, "hhh"],
+          ['YearThree', 1022781.816,"yttt", 1790843.256,"jjj" ,593114.112, "uyy"],
+          ['YearFour',1470736.688,"fff",  2575191.344,"ddd", 852884.429, "hhh"],
+          ['YearFive',1985884.792, "ddd", 3477191.646,"fff" ,  1151620.293, "rrr"]
+        ]);
+
+        var options = {
+          width: "100%",
+          height: "100%",
+          title: "Total Cost Savings in 5 years - Lower is Better",
+          tooltip: {
+            isHtml: true
+          },
+          legend: {
+            position: "none",
+          },
+          pointSize: 10,
+          lineWidth: 2,
+          colors: ["#BA9673", "#FFCF19", "#790977"],
+          fontName: "Lato",
+          fontSize: 20,
+          vAxis: {
+            format: "decimal",
+            gridlines: {
+              color: "#c3c6c8",
+            },
+            minorGridlines: {
+              color: "transparent",
+            },
+            baselineColor: "#c3c6c8",
+            minValue: 0,
+          },
+          curveType: "function",
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="width: 900px; height: 100%"></div>
+    <div class="statistics-tags">
+      <span class="statistics-tag tag-grey">Ownership</span>
+      <span class="statistics-tag tag-yellow">Rental</span>
+      <span class="statistics-tag tag-yellow">Rental</span>
+    </div>
+  </body>
+</html>

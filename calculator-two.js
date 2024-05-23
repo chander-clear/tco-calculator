@@ -441,7 +441,7 @@
       if (tibInput.classList.contains('ultra-disk')) {
         if (tibInput.value == '') {
           var resultDataArray = [
-            ['Values', 'UltraDisk', 'Lightbits'],
+            ['Year', 'UltraDisk', 'Lightbits'],
             ['YearOne', 0, 0],
             ['YearTwo', 0, 0],
             ['YearThree', 0, 0],
@@ -455,7 +455,7 @@
         } else {
   
           var resultDataArray = [
-            ['Values', 'UltraDisk', 'Lightbits'],
+            ['Year', 'UltraDisk', 'Lightbits'],
             ['YearOne', ultraDiskResult.cumulativeCost.oneYear, amdResult.cumulativeCost.oneYear],
             ['YearTwo', ultraDiskResult.cumulativeCost.twoYear, amdResult.cumulativeCost.twoYear],
             ['YearThree', ultraDiskResult.cumulativeCost.threeYear,  amdResult.cumulativeCost.threeYear],
@@ -469,7 +469,7 @@
       } else if (tibInput.classList.contains('ssd-v2')) {
         if (tibInput.value == '') {
           var resultDataArray = [
-            ['Values', 'Premium SSD v2', 'Lightbits'],
+            ['Year', 'Premium SSD v2', 'Lightbits'],
             ['YearOne', 0, 0],
             ['YearTwo', 0, 0],
             ['YearThree', 0, 0],
@@ -483,7 +483,7 @@
         } else {
   
           var resultDataArray = [
-            ['Values', 'Premium SSD v2', 'Lightbits'],
+            ['Year', 'Premium SSD v2', 'Lightbits'],
             ['YearOne', premiumSsdResults.cumulativeCost.oneYear, amdResult.cumulativeCost.oneYear],
             ['YearTwo', premiumSsdResults.cumulativeCost.twoYear, amdResult.cumulativeCost.twoYear],
             ['YearThree', premiumSsdResults.cumulativeCost.threeYear,  amdResult.cumulativeCost.threeYear],
@@ -526,7 +526,7 @@
       } else if (tibInput.classList.contains('ssd-v2')) {
         if (tibInput.value == '') {
           var resultDataArray = [
-            ["Element", "Density", { role: "style" } ],
+            ["Capacity", "Capacity", { role: "style" } ],
             ["Premium SSD v2", 0, "#BA9673"],
             ["Lightbits", 0, "#790977"],
           ]
@@ -534,7 +534,7 @@
           return resultDataArray;
         } else {
           var resultDataArray = [
-            ["Element", "Density", { role: "style" } ],
+            ["Element", "Capacity", { role: "style" } ],
             ["Premium SSD v2", premiumSsdPrCapacity, "#BA9673"],
             ["Lightbits", amdPrCapacity, "#790977"],
           ]
@@ -607,17 +607,8 @@
       },
       pointSize: 20,
       lineWidth: 5,
-      colors: ["#BA9673", "#FFCF19", "#790977"],
+      colors: ["#BA9673", "#790977"],
       fontName: "Lato",
-      chartArea: {
-        width: "100%",
-        height: "100%",
-        top: 84,
-        left: 110,
-        bottom: 10,
-        right: 0,
-        backgroundColor: "transparent",
-      },
       fontSize: 20,
       hAxis: {
         format: "string",
@@ -643,9 +634,11 @@
     };
 
     var barOptions = {
-      title: "Density of Precious Metals, in g/cm^3",
       width: "100%",
       height: "100%",
+      titleTextStyle: { color: '#000' },
+      fontSize: 20,
+      fontName: 'Lato',
       bar: {groupWidth: "95%"},
       legend: { position: "none" },
     }

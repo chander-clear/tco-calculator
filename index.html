@@ -5,13 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lightbits Calculator</title>
-  <!--Load the AJAX API-->
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
     rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
@@ -41,7 +41,7 @@
       border-width: 2px 2px 2px 2px;
       border-radius: 1rem;
       padding: 1.5rem 2.5rem;
-      text-decoration: none;
+      text-decoration: none !important;
       display: inline-block;
       transition: all 0.3s ease-in-out;
       text-align: center;
@@ -75,7 +75,7 @@
       font-weight: 700;
       line-height: 1.4;
       letter-spacing: 1px;
-      text-decoration: none;
+      text-decoration: none !important;
       position: relative;
       display: inline-block;
     }
@@ -104,13 +104,14 @@
     }
 
     .col-six {
-      flex: 0 0 60%;
-      max-width: 60%;
+      flex: 0 0 100%;
+      max-width: 100%;
     }
 
     .col-four {
-      flex: 0 0 40%;
-      max-width: 40%;
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-top: 2rem;
     }
 
     @media (max-width: 991px) {
@@ -122,7 +123,7 @@
 
     .intro-block h2 {
       color: #281529;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       font-family: Lato;
       font-size: 2.8rem;
       font-style: normal;
@@ -135,8 +136,24 @@
     }
 
     @media (min-width: 767px) {
+  
       .intro-block h2 {
         font-size: 4.5rem;
+      }
+    }
+    @media (min-width: 991px) {
+      .col-six {
+        flex: 0 0 60%;
+        max-width: 60%;
+      }
+
+      .col-four {
+        flex: 0 0 40%;
+        max-width: 40%;
+        margin-top: 0;
+      }
+      .calculation-result-wrapper {
+        text-align: center;
       }
     }
 
@@ -153,6 +170,7 @@
       border-radius: 0.5rem;
       font-size: 2rem;
       font-style: normal;
+      font-family: 'Lato';
       font-weight: 700;
       line-height: 1.2;
       width: 100%;
@@ -197,12 +215,6 @@
       transition: all 0.5s ease-in-out;
     }
 
-    @media (max-width: 1279px) {
-      .content-modal {
-        padding: 50px 0;
-      }
-    }
-
     .content-modal .backdrop {
       position: absolute;
       top: 0;
@@ -227,9 +239,9 @@
       height: 100%;
       border-radius: 10px;
       overflow: hidden;
-      background-color: #fff;
+      background-color: #EDE7ED;
       border: 2px solid #281529;
-      padding: 7.5rem 11rem;
+      padding: 4rem 3rem 3rem;
       overflow-y: auto;
     }
 
@@ -245,6 +257,10 @@
       border-bottom: 1px solid #790977;
     }
 
+    .content-modal-item .content-wrap ul {
+      padding-left: 2rem;
+    }
+
     .content-modal-item .content-wrap li {
       margin-top: 1.5rem;
       color: #000;
@@ -253,6 +269,7 @@
       font-weight: 400;
       line-height: 1.5;
       letter-spacing: 0.5px;
+      position: relative;
     }
 
     .content-modal-item .content-wrap li strong {
@@ -272,7 +289,7 @@
 
     .content-modal--open {
       opacity: 1;
-      z-index: 100;
+      z-index: 100001;
       visibility: visible;
     }
 
@@ -345,7 +362,11 @@
       padding: 5rem 0;
       background: rgba(95, 48, 94, 1);
       color: #fff;
-      text-align: center;
+    }
+
+    .calculation-result-wrapper .row {
+      width: calc(100% + 4rem);
+      margin-left: -2rem;
     }
 
     .calculation-number h2 {
@@ -367,9 +388,9 @@
     }
 
     .calculation-number h2 .calculation-values {
-      font-size: 3.8rem;
+      font-size: 4.5rem;
       font-style: normal;
-      font-weight: 400;
+      font-weight: 700;
       line-height: 1.2;
       letter-spacing: 1px;
       color: #FFCF19;
@@ -415,14 +436,77 @@
       margin-bottom: 5rem;
     }
 
+    .tags-wrapper {
+      text-align: center;
+    }
 
+    .tag {
+      font-family: Lato;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.2;
+      position: relative;
+      display: inline-block;
+      padding-left: 2.1rem;
+      margin-top: 1.5rem;
+    }
 
-    #line-graph {
-      min-height: 786px;
+    .tag::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 1.1rem;
+      height: 1.1rem;
+      left: 0;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .tag:not(:last-child) {
+      margin-right: 3rem;
+    }
+
+    .tag.tag-grey::before {
+      background-color: #BA9673;
+    }
+
+    .tag.tag-yellow::before {
+      background-color: #FFCF19;
+    }
+
+    .tag.tag-purple::before {
+      background-color: #790977;
+    }
+
+    .chart-wrapper {
+      min-height: 60rem;
       width: 100%;
       padding: 5rem;
       border-radius: 2rem;
       background-color: #fff;
+    }
+
+    .chart-wrapper h3 {
+      color: #000;
+      font-family: Lato;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    #line-graph {
+      min-height: 54rem;
+      width: 100%;
+      margin-top: -3rem;
+    }
+
+    #line-graph svg text {
+      font-size: 2rem !important;
     }
 
     #line-graph>div {
@@ -430,8 +514,124 @@
     }
 
     .calculator-graph-wrap {
-      padding: 15rem;
+      padding: 10rem 0;
       background-color: #281529;
+    }
+
+    .statistics__tooltip {
+        padding: 10px;
+        background-color: #F4F4F4;
+        border-radius: 0.5rem;
+        border: 0;
+        box-shadow: none;
+        position: absolute;
+        top: -100px;
+        left: -128px;
+        outline: none;
+        min-width: 200px;
+      }
+      .statistics__tooltip p {
+        font-size: 11px;
+        color: #000;
+        margin-top: 0.5rem;
+      }
+      .statistics__tooltip span {
+        display: inline-block;
+      }
+      .statistics__tooltip .bottom-bar {
+        display: block;
+        height: 6px;
+        background-color: red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        right: 0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      .statistics__tooltip .bottom-bar::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        border-color: #000 transparent transparent transparent;
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        transform: translateX(-50%);
+        z-index: -1;
+      }
+
+      .statistics__tooltip .purple-text {
+        color: #790977;
+        font-weight: 700;
+      }
+
+      .tooltip-heading {
+        font-family: Lato;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 100%; 
+        text-transform: uppercase;
+      }
+
+      .statistics__tooltip p strong {
+        font-size: inherit;
+        line-height: inherit;
+        font-weight: 700;
+      }
+
+      .statistics__tooltip p span {
+        font-size: inherit;
+        line-height: inherit;
+      }
+
+      .grey-tooltip .tooltip-heading {
+        color: #BA9673;
+      }
+
+      .grey-tooltip .bottom-bar{
+        background-color: #BA9673;
+      }
+      .grey-tooltip .bottom-bar::after{
+        border-color: #BA9673 transparent transparent transparent;
+      }
+      .yellow-tooltip .tooltip-heading {
+        color: #FFCF19;
+      }
+
+      .yellow-tooltip .bottom-bar{
+        background-color: #FFCF19;
+      }
+      .yellow-tooltip .bottom-bar::after{
+        border-color: #FFCF19 transparent transparent transparent;
+      }
+      .purple-tooltip .tooltip-heading {
+        color: #790977;
+      }
+
+      .purple-tooltip .bottom-bar{
+        background-color: #790977;
+      }
+      .purple-tooltip .bottom-bar::after{
+        border-color: #790977 transparent transparent transparent;
+      }
+
+    @media (max-width: 1279px) {
+      .content-modal {
+        padding: 50px 0;
+      }
+      #line-graph {
+        min-height: 50rem;
+      }
+
+      .chart-wrapper {
+        min-height: 50rem;
+      }
     }
 
     @media (max-width: 991px) {
@@ -444,6 +644,14 @@
         padding: 8rem 0;
       }
 
+      .calculator-graph-wrap {
+        padding: 8rem 0;
+      }
+
+      .chart-wrapper {
+        padding: 4rem;
+      }
+
       .calculation-result-wrapper .col-two:not(:first-child) {
         margin-top: 2rem;
       }
@@ -452,6 +660,31 @@
     @media (max-width: 768px) {
       .calculator-input-wrapper .input-outer-wrap {
         padding: 2.5rem;
+      }
+
+      #line-graph {
+        min-height: 40rem;
+        overflow-x: auto;
+        margin-top: -8rem;
+      }
+
+      .chart-wrapper {
+        min-height: 4rem;
+        padding: 4rem 2.5rem;
+      }
+
+      .calculator-graph-wrap {
+        padding: 6rem 0;
+      }
+
+      .chart-wrapper h3 {
+        font-size: 2.4rem;
+        margin-bottom: 3rem;
+      }
+
+      .calculator-action-wrapper .button-wrapper a {
+        margin-right: 1.5rem;
+        margin-left: 1.5rem;
       }
 
       .input-item.divider-bottom {
@@ -487,11 +720,33 @@
         flex: 0 0 100%;
         max-width: 100%;
       }
+      .chart-wrapper {
+        min-height: 50rem;
+      }
+      
+      #line-graph {
+        min-height: 30rem;
+      }
     }
 
     @media (min-width: 1280px) {
+      .calculator-action-wrapper .btn-new.btn-new-default {
+        font-size: 2rem;
+      }
       .calculator-input-wrapper .input-outer-wrap {
         margin-left: 10rem;
+      }
+      .content-modal-item .content-wrap {
+        padding: 7.5rem 11rem;
+      }
+      .calculator-graph-wrap {
+        padding: 15rem 0;
+      }
+    }
+
+    @media (max-height: 768px) {
+      .content-modal-item {
+        height: 40rem;
       }
     }
 
@@ -499,6 +754,7 @@
       display: none;
     }
   </style>
+
 </head>
 <body>
   <main>
@@ -601,7 +857,15 @@
       <div class="calculator">
         <div class="calculator-graph-wrap">
           <div class="container">
-            <div id="line-graph"></div>
+            <div class="chart-wrapper">
+              <h3>Total Cost Savings in 5 years - Lower is Better</h3>
+              <div id="line-graph"></div>
+              <div class="tags-wrapper">
+                <span class="tag tag-grey">vSAN -AV36P</span>
+                <span class="tag tag-yellow">vSAN -AV64</span>
+                <span class="tag tag-purple">Lightbits</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="container">

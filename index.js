@@ -87,6 +87,42 @@
     var totalCostHtmlField = document.getElementById("total-cost");
     var tibInput = document.getElementById("tib-input");
 
+    var options = {
+      width: "100%",
+      height: "100%",
+      tooltip: {
+        isHtml: true
+      },
+      legend: {
+        position: "none"
+      },
+      pointSize: 10,
+      lineWidth: 2,
+      colors: ["#BA9673", "#FFCF19", "#790977"],
+      fontName: "Lato",
+      fontSize: 20,
+      chartArea: {width: "90%", left: "140", top: 50, bottom: "50"},
+      vAxis: {
+        format: "decimal",
+        gridlines: {
+          color: "#EDE7ED",
+        },
+        viewWindow: {
+          min:0
+        },
+        minorGridlines: {
+          color: "transparent",
+        },
+        baselineColor: "#EDE7ED",
+        minValue: 0,
+        textStyle: {fontSize: 20}
+      },
+      curveType: "function",
+    };
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawGoogleChart);
+
     // Convert numeric to dollars currency format
     function numberToDollars(num, decimalPoint = 3) {
       var roundedNum = num > 0 ? parseFloat(num).toFixed(decimalPoint) : num;
@@ -120,6 +156,7 @@
     tibInput.addEventListener('input', function(e) {
       drawGoogleChart();
     })
+
     window.addEventListener('load', drawGoogleChart);
 
     // Calculate the Cost of AMD Year One
@@ -588,12 +625,12 @@
       
       if (tibInput.value == '') {
         var resultDataArray = [
-          ['Values', 'Av36p', 'Av64p', 'Lightbits'],
-          ['YearOne', 0, 0, 0],
-          ['YearTwo', 0, 0, 0],
-          ['YearThree', 0, 0, 0],
-          ['YearFour',0,0,0],
-          ['YearFive',0,0,0]
+          ['Year', 'Av36p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Av64p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits', { type: 'string', role: 'tooltip', p: { html: true } }],
+          ['YearOne', 0,createTooltipHtml("grey-tooltip","Year One:"), 0,createTooltipHtml("yellow-tooltip","Year One:"), 0 , createTooltipHtml("purple-tooltip","Year One:"),],
+          ['YearTwo', 0, createTooltipHtml("grey-tooltip","Year Two:"), 0,createTooltipHtml("yellow-tooltip","Year two:"), 0, createTooltipHtml("purple-tooltip","Year two:")],
+          ['YearThree', 0,createTooltipHtml("grey-tooltip","Year Three:"), 0,createTooltipHtml("yellow-tooltip","Year three:"), 0, createTooltipHtml("purple-tooltip","Year three:")],
+          ['YearFour',0,createTooltipHtml("grey-tooltip","Year Four:"),0,createTooltipHtml("yellow-tooltip","Year Four:"),0, createTooltipHtml("purple-tooltip","Year Four:")],
+          ['YearFive',0,createTooltipHtml("grey-tooltip","Year One:"), 0,createTooltipHtml("yellow-tooltip","Year One:"),0, createTooltipHtml("purple-tooltip","Year Five:")]
         ];
         totalCostHtml.textContent = 0;
         totalSavingHtml.textContent = 0;
@@ -601,27 +638,27 @@
         return resultDataArray;
       } else {
         var resultDataArray = [
-          ['Values', 'Av36p', 'Av64p', 'Lightbits'],
-          ['YearOne', av36Result.cumulativeCost.oneYear, av64Result.cumulativeCost.oneYear, amdResult.cumulativeCost.oneYear],
-          ['YearTwo', av36Result.cumulativeCost.twoYear, av64Result.cumulativeCost.twoYear, amdResult.cumulativeCost.twoYear],
-          ['YearThree', av36Result.cumulativeCost.threeYear, av64Result.cumulativeCost.threeYear, amdResult.cumulativeCost.threeYear],
-          ['YearFour', av36Result.cumulativeCost.fourYear, av64Result.cumulativeCost.fourYear, amdResult.cumulativeCost.fourYear],
-          ['YearFive', av36Result.cumulativeCost.fiveYear, av64Result.cumulativeCost.fiveYear, amdResult.cumulativeCost.fiveYear]
+          ['Year', 'Av36p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Av64p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits', { type: 'string', role: 'tooltip', p: { html: true } }],
+          ['YearOne', av36Result.cumulativeCost.oneYear, createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(av36Result.cumulativeCost.oneYear, 2)}`, `${numberToDollars(av64Result.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`), av64Result.cumulativeCost.oneYear, createTooltipHtml("yellow-tooltip","Year One:", `${numberToDollars(av36Result.cumulativeCost.oneYear, 2)}`, `${numberToDollars(av64Result.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`), amdResult.cumulativeCost.oneYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(av36Result.cumulativeCost.oneYear, 2)}`, `${numberToDollars(av64Result.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`)],
+          ['YearTwo', av36Result.cumulativeCost.twoYear, createTooltipHtml("grey-tooltip","Year Two:", `${numberToDollars(av36Result.cumulativeCost.twoYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.twoYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear,2)}`), av64Result.cumulativeCost.twoYear,createTooltipHtml("yellow-tooltip","Year Two:", `${numberToDollars(av36Result.cumulativeCost.twoYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.twoYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear,2)}`), amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year Two:", `${numberToDollars(av36Result.cumulativeCost.twoYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.twoYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear,2)}`)],
+          ['YearThree', av36Result.cumulativeCost.threeYear, createTooltipHtml("grey-tooltip","Year Three:", `${numberToDollars(av36Result.cumulativeCost.threeYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.threeYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear,2)}`), av64Result.cumulativeCost.threeYear,createTooltipHtml("yellow-tooltip","Year Three:", `${numberToDollars(av36Result.cumulativeCost.threeYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.threeYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear,2)}`), amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year Three:", `${numberToDollars(av36Result.cumulativeCost.threeYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.threeYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear,2)}`)],
+          ['YearFour', av36Result.cumulativeCost.fourYear, createTooltipHtml("grey-tooltip","Year Four:", `${numberToDollars(av36Result.cumulativeCost.fourYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.fourYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear,2)}`) ,av64Result.cumulativeCost.fourYear, createTooltipHtml("yellow-tooltip","Year Four:", `${numberToDollars(av36Result.cumulativeCost.fourYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.fourYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear,2)}`), amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year Four:", `${numberToDollars(av36Result.cumulativeCost.fourYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.fourYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear,2)}`)],
+          ['YearFive', av36Result.cumulativeCost.fiveYear, createTooltipHtml("grey-tooltip","Year Five:", `${numberToDollars(av36Result.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(av64Result.cumulativeCost.fiveYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear,2)}`), av64Result.cumulativeCost.fiveYear,createTooltipHtml("yellow-tooltip","Year Five:", `${numberToDollars(av36Result.cumulativeCost.fiveYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.fiveYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear,2)}`), amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year Five:", `${numberToDollars(av36Result.cumulativeCost.fiveYear,2)}`, `${numberToDollars(av64Result.cumulativeCost.fiveYear,2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear,2)}`)]
         ];
 
         return resultDataArray;
       }
-
-
-      // drawChart();
     }
 
     function drawGoogleChart() {
       var arrayValues = calculateValueAndGenerateData();
       var data = google.visualization.arrayToDataTable(arrayValues);
-      var chart = new google.charts.Line(document.getElementById('line-graph'));
-
-      chart.draw(data, google.charts.Line.convertOptions(options));
+      var container = document.getElementById('line-graph');
+      var chart = new google.visualization.LineChart(container);
+      
+      alterChartOptionsOnResize();
+      
+      chart.draw(data, options);
 
       return;
     }
@@ -647,58 +684,25 @@
       modal.classList.remove("content-modal--open");
     }
 
+    function createTooltipHtml(classNames,year, v32Value = `$${0}`, v64Value = `$${0}`, lightBitsValue = `$${0}`) {
+      return `<div class="statistics__tooltip ${classNames}"><p class="tooltip-heading">${year}</p><p>Save Up To <strong>80% More</strong> with Lightbits </p><p>vSAN -AV36P Cost: <span>${v32Value}</span></p><p>vSAN -AV64P Cost: <span>${v64Value}</span></p><p class="purple-text">Lightbits Cost: <span>${lightBitsValue}</span></p> <span class="bottom-bar"></span></div>`;
+    }
+
+    // Set chart options values based on window size 
+    function alterChartOptionsOnResize() {
+      if (window.innerWidth <= 767) {
+        options.width = 700;
+        options.chartArea.top = 100;
+      } else  {
+        options.width = "100%";
+        options.chartArea.top = 50;
+      }
+
+      return true;
+    }
+
     keyPointsBtn.addEventListener("click", handleKeyPointBtnClick);
     modalCloseBtn.addEventListener("click", handleModalClose);
     backdrop.addEventListener("click", handleModalClose);
-
-    var options = {
-      width: "100%",
-      height: "100%",
-      title: "Total Cost Savings in 5 years - Lower is Better",
-      tooltip: {
-        isHtml: true
-      },
-      legend: {
-        position: "bottom"
-      },
-      pointSize: 20,
-      lineWidth: 5,
-      colors: ["#BA9673", "#FFCF19", "#790977"],
-      fontName: "Lato",
-      chartArea: {
-        width: "100%",
-        height: "100%",
-        top: 84,
-        left: 110,
-        bottom: 10,
-        right: 0,
-        backgroundColor: "transparent",
-      },
-      fontSize: 20,
-      hAxis: {
-        format: "string",
-        maxValue: 5,
-      },
-      vAxis: {
-        logScale: "true",
-        format: "decimal",
-        // Discrete: "true",
-        gridlines: {
-          color: "#c3c6c8",
-        },
-        minorGridlines: {
-          color: "transparent",
-        },
-        baselineColor: "#c3c6c8",
-        minValue: 0,
-        viewWindow: {
-          min: 0,
-        },
-      },
-      curveType: "function",
-    };
-
-    google.charts.load('current', { 'packages': ['line'] });
-    google.charts.setOnLoadCallback(drawGoogleChart);
   });
 })();
