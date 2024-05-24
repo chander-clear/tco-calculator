@@ -19,6 +19,10 @@
       font-size: 62.5%;
     }
 
+    html {
+      overflow-x: hidden;
+    }
+
     main {
       position: relative;
       font-family: "Lato", sans-serif;
@@ -408,8 +412,8 @@
     .calculation-result-wrapper h5 span {
       font-size: 3rem;
       font-style: normal;
-      font-weight: 400;
-      line-height: 1.2;
+      font-weight: 700;
+      line-height: 1;
       letter-spacing: 1px;
       color: #FFCF19;
     }
@@ -506,7 +510,7 @@
     }
 
     #line-graph svg text {
-      font-size: 2rem !important;
+      font-size: 1.2rem !important;
     }
 
     #line-graph>div {
@@ -662,6 +666,10 @@
         padding: 2.5rem;
       }
 
+      .content-modal .close-button {
+        right: 2rem;
+      }
+
       #line-graph {
         min-height: 40rem;
         overflow-x: auto;
@@ -756,7 +764,7 @@
   </style>
 
 </head>
-<body>
+<body class="tco-calculator-page-content">
   <main>
     <section class="tco-calculator">
       <div class="calculator-input-wrapper">

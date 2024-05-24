@@ -17,6 +17,10 @@
       font-size: 62.5%;
     }
 
+    html {
+      overflow-x: hidden;
+    }
+
     main {
       position: relative;
       font-family: "Lato", sans-serif;
@@ -39,7 +43,7 @@
       border-width: 2px 2px 2px 2px;
       border-radius: 1rem;
       padding: 1.5rem 2.5rem;
-      text-decoration: none;
+      text-decoration: none !important;
       display: inline-block;
       transition: all 0.3s ease-in-out;
       text-align: center;
@@ -127,7 +131,7 @@
 
     .intro-block h2 {
       color: #281529;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       font-family: Lato;
       font-size: 2.8rem;
       font-style: normal;
@@ -145,6 +149,9 @@
       }
     }
     @media (min-width: 991px) {
+      .calculator-input-wrapper .row {
+        align-items: center;
+      }
       .col-six {
         flex: 0 0 60%;
         max-width: 60%;
@@ -176,6 +183,7 @@
       font-weight: 700;
       line-height: 1.2;
       width: 100%;
+      font-family: 'Lato';
       letter-spacing: 1px;
       padding: 1rem;
       height: 5.3rem;
@@ -202,6 +210,10 @@
       background-color: #fff;
     }
 
+    .chart-wrapper.bar-chart-wrap {
+      min-height: 35rem;
+    }
+
     .chart-wrapper h3 {
       color: #000;
       font-family: Lato;
@@ -216,12 +228,21 @@
       font-family: Lato;
       font-size: 19px;
       font-style: normal;
+      text-transform: none;
       font-weight: 400;
       line-height: 1.4; 
       margin-top: 0.5rem;
       letter-spacing: 1px;
     }
 
+    .chart-wrapper h5 > span {
+      font-size: 2.4rem;
+      font-weight: 700;
+    }
+
+    .chart-wrapper.bar-chart-wrap h3 {
+      margin-bottom: 0;
+    }
     .content-modal {
       position: fixed;
       top: 0;
@@ -245,12 +266,7 @@
       transition: all 0.5s ease-in-out;
     }
 
-    @media (max-width: 1279px) {
-      .content-modal {
-        padding: 50px 0;
-      }
-    }
-
+   
     .content-modal .backdrop {
       position: absolute;
       top: 0;
@@ -290,6 +306,10 @@
       color: #442744;
       letter-spacing: 1px;
       border-bottom: 1px solid #790977;
+    }
+
+    .content-modal-item .content-wrap ul {
+      padding-left: 2rem;
     }
 
     .content-modal-item .content-wrap li {
@@ -394,6 +414,11 @@
       color: #fff;
     }
 
+    .calculation-result-wrapper .row {
+      width: calc(100% + 4rem);
+      margin-left: -2rem;
+    }
+
     .calculation-number h2 {
       font-size: 3rem;
       font-style: normal;
@@ -406,6 +431,7 @@
       flex-wrap: wrap;
     }
 
+
     .calculation-number h2 span {
       font-size: inherit;
       font-weight: inherit;
@@ -413,9 +439,9 @@
     }
 
     .calculation-number h2 .calculation-values {
-      font-size: 3.8rem;
+      font-size: 4.5rem;
       font-style: normal;
-      font-weight: 400;
+      font-weight: 700;
       line-height: 1.2;
       letter-spacing: 1px;
       color: #FFCF19;
@@ -425,7 +451,8 @@
       font-size: 1.9rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 1.2;
+      line-height: 1.4;
+      text-transform: none;
       letter-spacing: 1px;
       margin-top: 2.5rem;
     }
@@ -433,8 +460,8 @@
     .calculation-result-wrapper h5 span {
       font-size: 3rem;
       font-style: normal;
-      font-weight: 400;
-      line-height: 1.2;
+      font-weight: 700;
+      line-height: 1;
       letter-spacing: 1px;
       color: #FFCF19;
     }
@@ -450,6 +477,11 @@
       padding-left: 2rem;
     }
 
+    .calculation-number.no-padding {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     .calculator-action-wrapper .button-wrapper a {
       margin-left: 2.5rem;
       margin-right: 2.5rem;
@@ -461,26 +493,225 @@
       margin-bottom: 5rem;
     }
 
+    .tags-wrapper {
+      text-align: center;
+    }
+
+    .tag {
+      font-family: Lato;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.2;
+      position: relative;
+      display: inline-block;
+      padding-left: 2.1rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 1.1rem;
+      height: 1.1rem;
+      left: 0;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .tag:not(:last-child) {
+      margin-right: 3rem;
+    }
+
+    .tag.tag-grey::before {
+      background-color: #BA9673;
+    }
+
+    .tag.tag-yellow::before {
+      background-color: #FFCF19;
+    }
+
+    .tag.tag-purple::before {
+      background-color: #790977;
+    }
 
 
-    #line-graph {
-      min-height: 786px;
+    .chart-wrapper {
+      min-height: 60rem;
       width: 100%;
       padding: 5rem;
       border-radius: 2rem;
       background-color: #fff;
     }
 
+    .chart-wrapper h3 {
+      color: #000;
+      font-family: Lato;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    #line-graph {
+      min-height: 54rem;
+      width: 100%;
+      margin-top: -3rem;
+    }
+
+    #line-graph svg text {
+      font-size: 1.2rem !important;
+    }
+
     #line-graph>div {
       height: 100%;
     }
 
+    #bar-chart svg text {
+      font-size: 1.2rem !important;
+    }
+
     .calculator-graph-wrap {
-      padding: 15rem;
+      padding: 10rem 0;
       background-color: #281529;
     }
 
+    .statistics__tooltip {
+        padding: 10px;
+        background-color: #F4F4F4;
+        border-radius: 0.5rem;
+        border: 0;
+        box-shadow: none;
+        position: absolute;
+        top: -90px;
+        left: -125px;
+        outline: none;
+        min-width: 200px;
+      }
+      .statistics__tooltip.bar-chart-tooltip {
+        top: -100px;
+      }
+      .statistics__tooltip p {
+        font-size: 11px;
+        color: #000;
+        margin-top: 0.5rem;
+      }
+      .statistics__tooltip span {
+        display: inline-block;
+      }
+      .statistics__tooltip .bottom-bar {
+        display: block;
+        height: 6px;
+        background-color: red;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        right: 0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      .statistics__tooltip .bottom-bar::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        border-color: #000 transparent transparent transparent;
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        transform: translateX(-50%);
+        z-index: -1;
+      }
+
+      .statistics__tooltip .purple-text {
+        color: #790977;
+        font-weight: 700;
+      }
+
+      .statistics__tooltip .purple-text-2 {
+        color: #442744 !important;
+      }
+
+      .tooltip-heading {
+        font-family: Lato;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 100%; 
+        text-transform: uppercase;
+      }
+
+      .statistics__tooltip p strong {
+        font-size: inherit;
+        line-height: inherit;
+        font-weight: 700;
+      }
+
+      .statistics__tooltip p span {
+        font-size: inherit;
+        line-height: inherit;
+      }
+
+      .grey-tooltip .tooltip-heading {
+        color: #BA9673;
+      }
+
+      .grey-tooltip .bottom-bar{
+        background-color: #BA9673;
+      }
+      .grey-tooltip .bottom-bar::after{
+        border-color: #BA9673 transparent transparent transparent;
+      }
+      .yellow-tooltip .tooltip-heading {
+        color: #FFCF19;
+      }
+
+      .yellow-tooltip .bottom-bar{
+        background-color: #FFCF19;
+      }
+      .yellow-tooltip .bottom-bar::after{
+        border-color: #FFCF19 transparent transparent transparent;
+      }
+      .purple-tooltip .tooltip-heading {
+        color: #790977;
+      }
+
+      .purple-tooltip .bottom-bar{
+        background-color: #790977;
+      }
+      .purple-tooltip .bottom-bar::after{
+        border-color: #790977 transparent transparent transparent;
+      }
+
+      .grey-text {
+        color: #BA9673 !important;
+      }
+
+    @media (max-width: 1279px) {
+      .content-modal {
+        padding: 50px 0;
+      }
+      #line-graph {
+        min-height: 50rem;
+      }
+      .chart-wrapper {
+        min-height: 50rem;
+      }
+    }
+
+
     @media (max-width: 991px) {
+      .calculator-graph-wrap {
+        padding: 8rem 0;
+      }
+
       .calculator-input-wrapper .input-outer-wrap {
         margin-left: 0;
         margin-top: 3rem;
@@ -490,12 +721,22 @@
         padding: 8rem 0;
       }
 
+      .chart-wrapper {
+        padding: 4rem;
+      }
+
       .calculation-result-wrapper .col-two:not(:first-child) {
         margin-top: 2rem;
       }
     }
 
     @media (max-width: 768px) {
+      .calculator-graph-wrap {
+        padding: 6rem 0;
+      }
+      .content-modal .close-button {
+        right: 2rem;
+      }
       .calculator-input-wrapper .input-outer-wrap {
         padding: 2.5rem;
       }
@@ -508,6 +749,34 @@
       .input-item.divider-bottom {
         padding-bottom: 3rem;
         margin-bottom: 3rem;
+      }
+
+      #line-graph {
+        min-height: 40rem;
+        overflow-x: auto;
+        margin-top: -8rem;
+      }
+
+      #bar-chart {
+        overflow-x: auto;
+      }
+
+      .chart-wrapper {
+        min-height: 4rem;
+        padding: 4rem 2.5rem;
+      }
+
+      .chart-wrapper h3 {
+        font-size: 2.4rem;
+        margin-bottom: 3rem;
+      }
+
+      .chart-wrapper h5 {
+        font-size: 1.6rem;
+      }
+
+      .chart-wrapper h5 > span {
+        font-size: 1.8rem;
       }
 
       .calculator-input-wrapper {
@@ -538,12 +807,18 @@
         flex: 0 0 100%;
         max-width: 100%;
       }
+      #line-graph {
+        min-height: 30rem;
+      }
       .input-item .form-group-input .btn-new:not(:first-child) {
         margin-top: 2rem;
       }
     }
 
     @media (min-width: 1280px) {
+      .calculator-action-wrapper .btn-new.btn-new-default {
+        font-size: 2rem;
+      }
       .calculator-input-wrapper .input-outer-wrap {
         margin-left: 10rem;
       }
@@ -563,12 +838,12 @@
     <section class="tco-calculator">
       <div class="calculator-input-wrapper">
         <div class="container">
-          <div class="intro-block">
-            <h2>See How Much You Can Save on Your Cloud Storage Costs</h2>
-          </div>
           <div class="row">
             <div class="col-two">
               <div class="content-wrap">
+                <div class="intro-block">
+                  <h2>See How Much You Can Save on Your Cloud Storage Costs</h2>
+                </div>
                 <p>Native cloud storage on Azure can be up to 7x more expensive than Lightbits. For performance-sensitive, large-scale workloads Lightbits offers the fastest block storage on Azure today with predictable low cost that will not bust your IT budget.</p>
               </div>
             </div>
@@ -613,7 +888,7 @@
                   <span>
                     Maximum Cost Savings:
                   </span>
-                  <span class="calculation-values" id="total-cost">0</span>
+                  <span class="calculation-values" id="total-cost"></span>
                 </h2>
               </div>
             </div>
@@ -623,12 +898,12 @@
                   <span>
                     Maximum Savings:
                   </span>
-                  <span class="calculation-values" id="calculation-percentage">0</span>
+                  <span class="calculation-values" id="calculation-percentage"></span>
                 </h2>
               </div>
             </div>
           </div>
-          <div class="calculation-number">
+          <div class="calculation-number no-padding">
             <h5>
               Lightbits outperforms Premium SSD v2 by approximately <span>4.4X</span>.
             </h5>
@@ -659,10 +934,18 @@
       <div class="calculator">
         <div class="calculator-graph-wrap">
           <div class="container">
-            <div id="line-graph"></div>
             <div class="chart-wrapper">
+              <h3>Total Cost Savings in 5 years - Lower is Better</h3>
+              <div id="line-graph"></div>
+              <div class="tags-wrapper">
+                <span class="tag tag-grey">Ultra Disk</span>
+                <span class="tag tag-purple">Lightbits</span>
+              </div>
+            </div>
+
+            <div class="chart-wrapper bar-chart-wrap">
               <h3>Max IOPS per Provisioned Capacity -</h3>
-              <h5>Lightbits outperforms Premium SSD v2 by approximately 4.4X. Vehicula in id augue nunc nullam proin dolor ipsum.</h5>
+              <h5>Lightbits outperforms Premium SSD v2 by approximately <span class="max-number">4.4X.</span> Vehicula in id augue nunc nullam proin dolor ipsum.</h5>
               <div id="bar-chart"></div>
             </div>
           </div>
