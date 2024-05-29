@@ -73,6 +73,14 @@
       return "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+    function numberToDollarsRound(num) {
+      var rawValue = num > 0 ? parseFloat(num) : num;
+        
+      var roundedNum = Math.trunc(rawValue);
+
+      return "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     // Convert negative numbers to positive numbers and limit max digits to 12 digits for number inputs
     function getPositiveNumAndLimitMaxDigits(input) {
       if (!!input.value) {
@@ -120,13 +128,16 @@
       window.addEventListener(evt, printCharts, false);
     });
 
+
     tibInput.addEventListener('input', function(e) {
       printCharts();
     })
 
+    tibInput.addEventListener('keypress', onlyNumbers);
+
     window.addEventListener('load', printCharts);
 
-    const buttons = document.querySelectorAll('.form-group-input .btn-new');
+    const buttons = document.querySelectorAll('.input-item.divider-bottom .form-group-input .btn-new');
 
    
     for (i = 0; i < buttons.length; i++) {
@@ -450,14 +461,12 @@
 
       if (tibInput.classList.contains('ultra-disk')) {
         if (ultraDiskTotalCostInPercentage) {
-          // ultraDiskTotalCostHtml.textContent = numberToDollars(ultraDiskTotalCost, 2);
-          // ultraDiskTotalSavingHtml.textContent = ultraDiskTotalCostInPercentage;
-          totalCostHtml.textContent = numberToDollars(ultraDiskTotalCost, 2);
+          totalCostHtml.textContent = numberToDollarsRound(ultraDiskTotalCost);
           totalSavingHtml.textContent = ultraDiskTotalCostInPercentage;
         }
 
       } else if (tibInput.classList.contains('ssd-v2')) {
-        totalCostHtml.textContent = numberToDollars(premiumSsdTotalCost, 2);
+        totalCostHtml.textContent = numberToDollarsRound(premiumSsdTotalCost);
         totalSavingHtml.textContent = premiumSsdTotalCostInPercentage;
       }
 
@@ -521,15 +530,14 @@
     }
 
     function calculateCapacityAndGenerateData() {
-      var tibInput = document.getElementById("tib-input");
-
+      var tibInput = getPositiveNumAndLimitMaxDigits(document.getElementById("tib-input"));
 
       amdPrCapacity = calculateAmdProvsionedCapacity();
       ultraDiskPrCapacity = calculateUltraDiskProvsionedCapacity();
       premiumSsdPrCapacity = calculatepremiumSsdProvsionedCapacity();
 
-      if (tibInput.classList.contains('ultra-disk')) {
-        if (tibInput.value == '') {
+      if (document.getElementById("tib-input").classList.contains('ultra-disk')) {
+        if (tibInput == 0) {
           var resultDataArray = [
             ["Element", "Capacity", { role: "style" }, {type: 'string', role: 'tooltip', p: {html:true}} ],
             ["Ultra Disk", 0, "#BA9673", createBarChartTooltipHtml("grey-tooltip", )],
@@ -550,8 +558,8 @@
           return resultDataArray;
         }
 
-      } else if (tibInput.classList.contains('ssd-v2')) {
-        if (tibInput.value == '') {
+      } else if (document.getElementById("tib-input").classList.contains('ssd-v2')) {
+        if (tibInput == 0) {
           var resultDataArray = [
             ["Capacity", "Capacity", { role: "style" }, {type: 'string', role: 'tooltip', p: {html:true}} ],
             ["Premium SSD v2", 0, "#BA9673", createBarChartTooltipHtml("grey-tooltip", )],
@@ -616,6 +624,18 @@
 
     function createBarChartTooltipHtml(classNames, typeString , ultraDiskValue = `$${0}`, lightBitsValue = `$${0}`) {
       return `<div class="statistics__tooltip bar-chart-tooltip ${classNames}"><p class="tooltip-heading purple-text-2">Max IOPS <br> per Provisioned Capacity Comparison</p><p class="grey-text">${typeString} Capacity: <span>${ultraDiskValue}</span></p><p class="purple-text">Lightbits Capacity: <span>${lightBitsValue}</span></p> <span class="bottom-bar"></span></div>`;
+    }
+
+    function onlyNumbers(event) {
+      // Allow backspace key for deleting characters
+      if (event.key === "Backspace") {
+        return;
+      }
+    
+      // Check if the pressed key is a number (0-9)
+      if (!/^\d+$/.test(event.key)) {
+        event.preventDefault();
+      }
     }
 
     function updateTag(tagString) {

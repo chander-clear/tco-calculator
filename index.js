@@ -126,6 +126,15 @@
     // Convert numeric to dollars currency format
     function numberToDollars(num, decimalPoint = 3) {
       var roundedNum = num > 0 ? parseFloat(num).toFixed(decimalPoint) : num;
+      
+      return "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function numberToDollarsRound(num) {
+      var rawValue = num > 0 ? parseFloat(num) : num;
+        
+      var roundedNum = Math.trunc(rawValue);
+
       return "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
@@ -156,6 +165,8 @@
     tibInput.addEventListener('input', function(e) {
       drawGoogleChart();
     })
+
+    tibInput.addEventListener('keypress', onlyNumbers);
 
     window.addEventListener('load', drawGoogleChart);
 
@@ -582,9 +593,21 @@
       return av64Calculations;
     }
 
-    function calculateValueAndGenerateData() {
-      var tibInput = document.getElementById("tib-input");
+    function onlyNumbers(event) {
+      // Allow backspace key for deleting characters
+      if (event.key === "Backspace") {
+        return;
+      }
+    
+      // Check if the pressed key is a number (0-9)
+      if (!/^\d+$/.test(event.key)) {
+        event.preventDefault();
+      }
+    }
 
+    function calculateValueAndGenerateData() {
+      var tibInput = getPositiveNumAndLimitMaxDigits(document.getElementById("tib-input"));
+      
       premiumSsdPrCapacity = calculatepremiumSsdProvsionedCapacity();
       ultraDiskPrCapacity = calculateUltraDiskProvsionedCapacity();
 
@@ -618,12 +641,11 @@
       if (av64TotalCostHtml) {
         av64TotalCostHtml.textContent = numberToDollars(av64TotalCost, 2);
         av64TotalSavingHtml.textContent = av64TotalCostPercentage;
-        totalCostHtml.textContent = numberToDollars(av64TotalCost, 2);
+        totalCostHtml.textContent = numberToDollarsRound(av64TotalCost);
         totalSavingHtml.textContent = av64TotalCostPercentage;
       }
 
-      
-      if (tibInput.value == '') {
+      if (tibInput == 0) {
         var resultDataArray = [
           ['Year', 'Av36p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Av64p', { type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits', { type: 'string', role: 'tooltip', p: { html: true } }],
           ['Year One', 0,createTooltipHtml("grey-tooltip","Year One:"), 0,createTooltipHtml("yellow-tooltip","Year One:"), 0 , createTooltipHtml("purple-tooltip","Year One:"),],
