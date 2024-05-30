@@ -659,7 +659,7 @@
       }
 
       .grey-tooltip .tooltip-heading {
-        color: #BA9673;
+        color: #790977;
       }
 
       .grey-tooltip .bottom-bar{
@@ -867,9 +867,9 @@
                         maxlength="9" />
                     </div>
                     <div class="btn-wrap">
-                      <span class="btn-new btn-new-default">
+                      <a href="#calc-result" class="btn-new btn-new-default" id="calc-btn">
                         Calculate
-                      </span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -878,7 +878,7 @@
           </div>
         </div>
       </div>
-      <div class="calculation-result-wrapper">
+      <div class="calculation-result-wrapper" id="calc-result">
         <div class="container">
           <div class="row">
             <div class="col-six">
@@ -946,98 +946,6 @@
               <h3>Max IOPS per Provisioned Capacity -</h3>
               <h5>Lightbits outperforms Premium SSD v2 by approximately <span class="max-number">4.4X.</span> Vehicula in id augue nunc nullam proin dolor ipsum.</h5>
               <div id="bar-chart"></div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="calculator-content d-none ">
-            <div class="results">
-              <h3>TCO - Cumulative (15% yoy)</h3>
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Year's</th>
-                    <th>1 year</th>
-                    <th>2 year</th>
-                    <th>3 year</th>
-                    <th>4 year</th>
-                    <th>5 year</th>
-                    <th>Total Cost Savings</th>
-                    <th>Total Savings</th>
-                  </tr>
-                  <tr>
-                    <th>Ultra Disk</th>
-                    <td id="ultra-disk-year-one">0</td>
-                    <td id="ultra-disk-year-two">0</td>
-                    <td id="ultra-disk-year-three">0</td>
-                    <td id="ultra-disk-year-four">0</td>
-                    <td id="ultra-disk-year-five">0</td>
-                    <td id="ultra-disk-total-cost">0</td>
-                    <td id="ultra-disk-total-cost-savings">0</td>
-                  </tr>
-                  <tr>
-                    <th>Premiun SSD v2</th>
-                    <td id="premium-ssd-year-one">0</td>
-                    <td id="premium-ssd-year-two">0</td>
-                    <td id="premium-ssd-year-three">0</td>
-                    <td id="premium-ssd-year-four">0</td>
-                    <td id="premium-ssd-year-five">0</td>
-                    <td id="premium-ssd-total-cost">0</td>
-                    <td id="premium-ssd-total-saving">0</td>
-                  </tr>
-                  <tr>
-                    <th>Lightbits</th>
-                    <td id="amd-cost-year-one">0</td>
-                    <td id="amd-cost-year-two">0</td>
-                    <td id="amd-cost-year-three">0</td>
-                    <td id="amd-cost-year-four">0</td>
-                    <td id="amd-cost-year-five">0</td>
-                    <td id="amd-total-cost">0</td>
-                    <td id="amd-total-savings">0</td>
-                  </tr>
-                  <tr>
-                    <th>Avs 36</th>
-                    <td id="av36-cost-year-one">0</td>
-                    <td id="av36-cost-year-two">0</td>
-                    <td id="av36-cost-year-three">0</td>
-                    <td id="av36-cost-year-four">0</td>
-                    <td id="av36-cost-year-five">0</td>
-                    <td id="av36-total-cost">0</td>
-                    <td id="av36-total-savings">0</td>
-                  </tr>
-                  <tr>
-                    <th>Avs 64</th>
-                    <td id="av64-cost-year-one">0</td>
-                    <td id="av64-cost-year-two">0</td>
-                    <td id="av64-cost-year-three">0</td>
-                    <td id="av64-cost-year-four">0</td>
-                    <td id="av64-cost-year-five">0</td>
-                    <td id="av64-total-cost">0</td>
-                    <td id="av64-total-savings">0</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="results">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Max IOPS Per Provsioned Capacity</th>
-                  </tr>
-                  <tr>
-                    <th>Ultra Disk</th>
-                    <td id="ultra-disk-cap">0</td>
-                  </tr>
-                  <tr>
-                    <th>Premiun SSD v2</th>
-                    <td id="premium-ssd-cap">0</td>
-                  </tr>
-                  <tr>
-                    <th>Lightbits</th>
-                    <td id="amd-cap">0</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
