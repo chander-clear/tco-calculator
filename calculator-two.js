@@ -474,11 +474,11 @@
         if (tibInput.value == '') {
           var resultDataArray = [
             ['Year', 'UltraDisk',{ type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits', { type: 'string', role: 'tooltip', p: { html: true } }],
-            ['Year One', 0, createTooltipHtml("grey-tooltip","Year One:"), 0 , createTooltipHtml("purple-tooltip","Year One:")],
-            ['Year Two', 0,createTooltipHtml("grey-tooltip","Year Two:"), 0,createTooltipHtml("purple-tooltip","Year Two:")],
-            ['Year Three', 0,createTooltipHtml("grey-tooltip","Year Three:"), 0,createTooltipHtml("purple-tooltip","Year Three:")],
-            ['Year Four', 0,createTooltipHtml("grey-tooltip","Year Four:"),0,createTooltipHtml("purple-tooltip","Year Four:")],
-            ['Year Five', 0,createTooltipHtml("grey-tooltip","Year One:"),0,createTooltipHtml("purple-tooltip","Year One:"),]
+            ['Year One', 0, createTooltipHtml("purple-tooltip","Year One:"), 0 , createTooltipHtml("purple-tooltip","Year One:")],
+            ['Year Two', 0,createTooltipHtml("purple-tooltip","Year Two:"), 0,createTooltipHtml("purple-tooltip","Year Two:")],
+            ['Year Three', 0,createTooltipHtml("purple-tooltip","Year Three:"), 0,createTooltipHtml("purple-tooltip","Year Three:")],
+            ['Year Four', 0,createTooltipHtml("purple-tooltip","Year Four:"),0,createTooltipHtml("purple-tooltip","Year Four:")],
+            ['Year Five', 0,createTooltipHtml("purple-tooltip","Year One:"),0,createTooltipHtml("purple-tooltip","Year One:"),]
           ];
           totalCostHtml.textContent = 0;
           totalSavingHtml.textContent = 0;
@@ -488,11 +488,11 @@
   
           var resultDataArray = [
             ['Year', 'UltraDisk',{ type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits',{ type: 'string', role: 'tooltip', p: { html: true } }],
-            ['Year One', ultraDiskResult.cumulativeCost.oneYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(ultraDiskResult.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`) ,amdResult.cumulativeCost.oneYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(ultraDiskResult.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`)],
-            ['Year Two', ultraDiskResult.cumulativeCost.twoYear,createTooltipHtml("grey-tooltip","Year Two:", `${numberToDollars(ultraDiskResult.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`) ,amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year Two:", `${numberToDollars(ultraDiskResult.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`)],
-            ['Year Three', ultraDiskResult.cumulativeCost.threeYear, createTooltipHtml("grey-tooltip","Year Three:", `${numberToDollars(ultraDiskResult.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`) ,amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year Three:", `${numberToDollars(ultraDiskResult.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`)],
-            ['Year Four', ultraDiskResult.cumulativeCost.fourYear,createTooltipHtml("grey-tooltip","Year Four:", `${numberToDollars(ultraDiskResult.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`) ,amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year Four:", `${numberToDollars(ultraDiskResult.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`)],
-            ['Year Five', ultraDiskResult.cumulativeCost.fiveYear,createTooltipHtml("grey-tooltip","Year Five:", `${numberToDollars(ultraDiskResult.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`) ,amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year Five:", `${numberToDollars(ultraDiskResult.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`)]
+            ['Year One', ultraDiskResult.cumulativeCost.oneYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(ultraDiskResult.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`) ,amdResult.cumulativeCost.oneYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(ultraDiskResult.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`)],
+            ['Year Two', ultraDiskResult.cumulativeCost.twoYear,createTooltipHtml("purple-tooltip","Year Two:", `${numberToDollars(ultraDiskResult.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`) ,amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year Two:", `${numberToDollars(ultraDiskResult.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`)],
+            ['Year Three', ultraDiskResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year Three:", `${numberToDollars(ultraDiskResult.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`) ,amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year Three:", `${numberToDollars(ultraDiskResult.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`)],
+            ['Year Four', ultraDiskResult.cumulativeCost.fourYear,createTooltipHtml("purple-tooltip","Year Four:", `${numberToDollars(ultraDiskResult.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`) ,amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year Four:", `${numberToDollars(ultraDiskResult.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`)],
+            ['Year Five', ultraDiskResult.cumulativeCost.fiveYear,createTooltipHtml("purple-tooltip","Year Five:", `${numberToDollars(ultraDiskResult.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`) ,amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year Five:", `${numberToDollars(ultraDiskResult.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`)]
           ];
   
           return resultDataArray;
@@ -502,11 +502,11 @@
         if (tibInput.value == '') {
           var resultDataArray = [
             ['Year', 'Premium SSD v2',{ type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits',{ type: 'string', role: 'tooltip', p: { html: true } }],
-            ['Year One', 0, createTooltipHtml("grey-tooltip","Year One:"), 0 , createTooltipHtml("purple-tooltip","Year One:")],
-            ['Year Two', 0,createTooltipHtml("grey-tooltip","Year Two:"), 0,createTooltipHtml("purple-tooltip","Year Two:")],
-            ['Year Three', 0,createTooltipHtml("grey-tooltip","Year Three:"), 0,createTooltipHtml("purple-tooltip","Year Three:")],
-            ['Year Four', 0,createTooltipHtml("grey-tooltip","Year Four:"),0,createTooltipHtml("purple-tooltip","Year Four:")],
-            ['Year Five', 0,createTooltipHtml("grey-tooltip","Year One:"),0,createTooltipHtml("purple-tooltip","Year One:"),]
+            ['Year One', 0, createTooltipHtml("purple-tooltip","Year One:"), 0 , createTooltipHtml("purple-tooltip","Year One:")],
+            ['Year Two', 0,createTooltipHtml("purple-tooltip","Year Two:"), 0,createTooltipHtml("purple-tooltip","Year Two:")],
+            ['Year Three', 0,createTooltipHtml("purple-tooltip","Year Three:"), 0,createTooltipHtml("purple-tooltip","Year Three:")],
+            ['Year Four', 0,createTooltipHtml("purple-tooltip","Year Four:"),0,createTooltipHtml("purple-tooltip","Year Four:")],
+            ['Year Five', 0,createTooltipHtml("purple-tooltip","Year One:"),0,createTooltipHtml("purple-tooltip","Year One:"),]
           ];
           totalCostHtml.textContent = 0;
           totalSavingHtml.textContent = 0;
@@ -516,11 +516,11 @@
   
           var resultDataArray = [
             ['Year', 'Premium SSD v2',{ type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits',{ type: 'string', role: 'tooltip', p: { html: true } }],
-            ['Year One', premiumSsdResults.cumulativeCost.oneYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`), amdResult.cumulativeCost.oneYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`)],
-            ['Year Two', premiumSsdResults.cumulativeCost.twoYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`), amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`)],
-            ['Year Three', premiumSsdResults.cumulativeCost.threeYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`),  amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`)],
-            ['Year Four', premiumSsdResults.cumulativeCost.fourYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`), amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`)],
-            ['Year Five', premiumSsdResults.cumulativeCost.fiveYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`), amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`)]
+            ['Year One', premiumSsdResults.cumulativeCost.oneYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`), amdResult.cumulativeCost.oneYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`)],
+            ['Year Two', premiumSsdResults.cumulativeCost.twoYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`), amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`)],
+            ['Year Three', premiumSsdResults.cumulativeCost.threeYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`),  amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`)],
+            ['Year Four', premiumSsdResults.cumulativeCost.fourYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`), amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`)],
+            ['Year Five', premiumSsdResults.cumulativeCost.fiveYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`), amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`)]
           ];
   
           return resultDataArray;
