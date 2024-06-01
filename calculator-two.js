@@ -5,8 +5,9 @@
     var modal = document.querySelector(".content-modal");
     var modalCloseBtn = document.querySelector(".close-button");
     var backdrop = document.querySelector(".content-modal .backdrop");
-    var ultraDiskButton = document.querySelector("#ultra-disk-btn");
-    var prSsdButton = document.querySelector("#pr-ssd-btn");
+    var marketoFormPopup = document.querySelector('.popup_form.demo');
+    var contactBtn = document.querySelector('.calculator-action-wrapper .contact-btn');
+    var calcBtn = document.querySelector('#calc-btn');
     var userInputValue = "";
 
     var amdCost = 0;
@@ -28,7 +29,6 @@
     const AMD_MBPS_MONTH = 0;
     const ULTRA_DISK_MBPS_MONTH = 0.34967;
     const PREMIUM_SSD_MBPS_MONTH = 0.041;
-
 
     const YEARLY_INFLAMATION_VALUE = 1 + 0.15;
 
@@ -67,10 +67,18 @@
 
     var tibInput = document.getElementById("tib-input");
 
+    const keyPointsUltraDisk = '<h3>Key Assumptions</h3><ul><li><strong>Data Reduction:</strong> 3:1: Achieved through compression, thin provisioning with auto-scaling, space-efficient snapshots, and clones.</li><li><strong>Highly Available w/ 3 replicas:</strong> Ensures high availability of data with three replicas.</li><li><strong>Azure VMs:</strong> Reserved 3 Year, EastUS: Utilizes reserved VM instances for 3 years in the EastUS region.</li><li><strong>Annual Expected Growth: 15%:</strong> Accounts for a projected annual growth rate of 15%.</li><li><strong>LRS Azure:</strong> Utilizes Locally Redundant Storage (LRS) in Azure.</li><li><strong>Ultra Disk Billing:</strong> Billed based on provisioned size, provisioned IOPS, and provisioned throughput, with 20 IOPS per GB and 2KBs per 1 I/O.</li></ul>';
+
+    const keyPointsSsdV2 = '<h3>Key Assumptions</h3><ul><li><strong>Data Reduction:</strong> 3:1: Achieved through compression, thin provisioning with auto-scaling, space-efficient snapshots, and clones.</li><li><strong>Highly Available w/ 2 replicas:</strong> Ensures high availability of data with two replicas.</li><li><strong>Azure VMs:</strong> Reserved 3 Year, EastUS: Utilizes reserved VM instances for 3 years in the EastUS region.</li><li><strong>Annual Expected Growth: 15%:</strong>Accounts for a projected annual growth rate of 15%.</li><li><strong>LRS Azure:</strong> Utilizes Locally Redundant Storage (LRS) in Azure.</li><li><strong>Premium SSD v2 Assumptions:</strong> Assumes 15K IOPS per TB and 2KBs per each I/O for Premium SSD v2.</li></ul>';
     // Convert numeric to dollars currency format
     function numberToDollars(num, decimalPoint = 3) {
       var roundedNum = num > 0 ? parseFloat(num).toFixed(decimalPoint) : num;
       return "$" + roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function formatNmWithComma(num) {
+      var roundedNum = num > 0 ? parseFloat(num) : num;
+      return roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     function numberToDollarsRound(num) {
@@ -460,12 +468,14 @@
       );
 
       if (tibInput.classList.contains('ultra-disk')) {
+        changeModalHtml(keyPointsUltraDisk);
         if (ultraDiskTotalCostInPercentage) {
           totalCostHtml.textContent = numberToDollarsRound(ultraDiskTotalCost);
           totalSavingHtml.textContent = ultraDiskTotalCostInPercentage;
         }
 
       } else if (tibInput.classList.contains('ssd-v2')) {
+        changeModalHtml(keyPointsSsdV2);
         totalCostHtml.textContent = numberToDollarsRound(premiumSsdTotalCost);
         totalSavingHtml.textContent = premiumSsdTotalCostInPercentage;
       }
@@ -517,10 +527,10 @@
           var resultDataArray = [
             ['Year', 'Premium SSD v2',{ type: 'string', role: 'tooltip', p: { html: true } }, 'Lightbits',{ type: 'string', role: 'tooltip', p: { html: true } }],
             ['Year One', premiumSsdResults.cumulativeCost.oneYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`), amdResult.cumulativeCost.oneYear,createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.oneYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.oneYear, 2)}`)],
-            ['Year Two', premiumSsdResults.cumulativeCost.twoYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`), amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`)],
-            ['Year Three', premiumSsdResults.cumulativeCost.threeYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`),  amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`)],
-            ['Year Four', premiumSsdResults.cumulativeCost.fourYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`), amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`)],
-            ['Year Five', premiumSsdResults.cumulativeCost.fiveYear,createTooltipHtml("grey-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`), amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year One:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`)]
+            ['Year Two', premiumSsdResults.cumulativeCost.twoYear,createTooltipHtml("grey-tooltip","Year Two:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`), amdResult.cumulativeCost.twoYear, createTooltipHtml("purple-tooltip","Year two:", `${numberToDollars(premiumSsdResults.cumulativeCost.twoYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.twoYear, 2)}`)],
+            ['Year Three', premiumSsdResults.cumulativeCost.threeYear,createTooltipHtml("grey-tooltip","Year Three:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`),  amdResult.cumulativeCost.threeYear, createTooltipHtml("purple-tooltip","Year Three:", `${numberToDollars(premiumSsdResults.cumulativeCost.threeYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.threeYear, 2)}`)],
+            ['Year Four', premiumSsdResults.cumulativeCost.fourYear,createTooltipHtml("grey-tooltip","Year Four:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`), amdResult.cumulativeCost.fourYear, createTooltipHtml("purple-tooltip","Year Four:", `${numberToDollars(premiumSsdResults.cumulativeCost.fourYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fourYear, 2)}`)],
+            ['Year Five', premiumSsdResults.cumulativeCost.fiveYear,createTooltipHtml("grey-tooltip","Year Five:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`), amdResult.cumulativeCost.fiveYear, createTooltipHtml("purple-tooltip","Year Five:", `${numberToDollars(premiumSsdResults.cumulativeCost.fiveYear, 2)}`, `${numberToDollars(amdResult.cumulativeCost.fiveYear, 2)}`)]
           ];
   
           return resultDataArray;
@@ -541,8 +551,11 @@
           var resultDataArray = [
             ["Element", "Capacity", { role: "style" }, {type: 'string', role: 'tooltip', p: {html:true}} ],
             ["Ultra Disk", 0, "#BA9673", createBarChartTooltipHtml("grey-tooltip", )],
-            ["Lightbits", 0, "#790977", createBarChartTooltipHtml("grey-tooltip", )],
+            ["Lightbits", 0, "#790977", createBarChartTooltipHtml("purple-tooltip", )],
           ]
+
+          updateDescriotion('Ultra Disk');
+          updateSubTitle('Ultra Disk');
   
           return resultDataArray;
         } else {
@@ -553,7 +566,9 @@
           ]
 
           updateTag('Ultra Disk');
-          updateDescriotion('<h5>Lightbits outperforms Ultra Disk by approximately <span>4.4X.</span></h5>');
+          let performance = calcPerformance(amdPrCapacity, ultraDiskPrCapacity);
+          updateDescriotion('Ultra Disk', performance);
+          updateSubTitle('Ultra Disk', performance);
           
           return resultDataArray;
         }
@@ -565,17 +580,22 @@
             ["Premium SSD v2", 0, "#BA9673", createBarChartTooltipHtml("grey-tooltip", )],
             ["Lightbits", 0, "#790977", createBarChartTooltipHtml("purple-tooltip", )],
           ]
+
+          updateDescriotion('Ultra Disk');
+          updateSubTitle('Premium SSD v2');
           
           return resultDataArray;
         } else {
           var resultDataArray = [
             ["Element", "Capacity", { role: "style" }, {type: 'string', role: 'tooltip', p: {html:true}} ],
-            ["Premium SSD v2", premiumSsdPrCapacity, "#BA9673", createBarChartTooltipHtml("grey-tooltip",  'PrePremium SSD v2' ,premiumSsdPrCapacity, amdPrCapacity)],
-            ["Lightbits", amdPrCapacity, "#790977", createBarChartTooltipHtml("grey-tooltip", 'PrePremium SSD v2' ,premiumSsdPrCapacity, amdPrCapacity)],
+            ["Premium SSD v2", premiumSsdPrCapacity, "#BA9673", createBarChartTooltipHtml("grey-tooltip",  'SSDv2' ,premiumSsdPrCapacity, amdPrCapacity)],
+            ["Lightbits", amdPrCapacity, "#790977", createBarChartTooltipHtml("purple-tooltip", 'SSDv2' ,premiumSsdPrCapacity, amdPrCapacity)],
           ]
 
           updateTag('Premium SSD v2');
-          updateDescriotion('<h5>Lightbits outperforms Premium SSD v2 by approximately <span>4.4X.</span></h5>');
+          let perNumber = calcPerformance(amdPrCapacity, premiumSsdPrCapacity);
+          updateDescriotion('Premium SSD v2', perNumber);
+          updateSubTitle('Premium SSD v2', perNumber);
           return resultDataArray;
         }
       }
@@ -622,8 +642,8 @@
       return `<div class="statistics__tooltip ${classNames}"><p class="tooltip-heading">${year}</p><p>Save Up To <strong>80% More</strong> with Lightbits </p><p>Ultra Disk Cost: <span>${ultraDiskValue}</span></p><p class="purple-text">Lightbits Cost: <span>${lightBitsValue}</span></p> <span class="bottom-bar"></span></div>`;
     }
 
-    function createBarChartTooltipHtml(classNames, typeString , ultraDiskValue = `$${0}`, lightBitsValue = `$${0}`) {
-      return `<div class="statistics__tooltip bar-chart-tooltip ${classNames}"><p class="tooltip-heading purple-text-2">Max IOPS <br> per Provisioned Capacity Comparison</p><p class="grey-text">${typeString} Capacity: <span>${ultraDiskValue}</span></p><p class="purple-text">Lightbits Capacity: <span>${lightBitsValue}</span></p> <span class="bottom-bar"></span></div>`;
+    function createBarChartTooltipHtml(classNames, typeString , ultraDiskValue = `0`, lightBitsValue = `0`) {
+      return `<div class="statistics__tooltip bar-chart-tooltip ${classNames}"><p class="tooltip-heading purple-text-2">Max IOPS <br> per Provisioned Capacity Comparison</p><p class="grey-text">Total IOPS for ${typeString}: <span>${formatNmWithComma(ultraDiskValue)}</span></p><p class="purple-text">Total IOPS for Lightbits: <span>${formatNmWithComma(lightBitsValue)}</span></p> <span class="bottom-bar"></span></div>`;
     }
 
     function onlyNumbers(event) {
@@ -638,13 +658,21 @@
       }
     }
 
+    function calcPerformance(lightbitsIops, otherIops) {
+      return lightbitsIops / otherIops;
+    }
+
     function updateTag(tagString) {
       document.querySelector('.tags-wrapper .tag.tag-grey').textContent = tagString;
     }
 
-    function updateDescriotion(descString) {
-      document.querySelector('.calculation-result-wrapper .calculation-number.no-padding').innerHTML = descString;
+    function updateDescriotion(type, performanceNum = 0) {
+      document.querySelector('.calculation-result-wrapper .calculation-number.no-padding').innerHTML = `<h5>Lightbits outperforms ${type} by approximately <span>${performanceNum}</span><span class="text-yellow">x</span></h5>`;
     }
+
+    function updateSubTitle(type, performanceNum = 0) {
+      document.querySelector('.bar-chart-subtitle').innerHTML = `<h5>Lightbits outperforms ${type} by approximately <span>${performanceNum}</span><span class="text-purple">x</span></h5>`;
+    } 
 
     function handleKeyPointBtnClick(e) {
       e.preventDefault();
@@ -668,12 +696,25 @@
 
       history.replaceState([],"",window.location.href.split('#')[0])
     }
-    
-    document.querySelector('#calc-btn').addEventListener('click', handleCalcBtnClick);
 
+    function changeModalHtml(htmlString) {
+      document.querySelector('.content-modal .content-inner').innerHTML = htmlString;
+    }
+
+    function handleContactUsClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (marketoFormPopup) {
+        marketoFormPopup.classList.add('active');
+      }
+    }
+    
     keyPointsBtn.addEventListener("click", handleKeyPointBtnClick);
     modalCloseBtn.addEventListener("click", handleModalClose);
     backdrop.addEventListener("click", handleModalClose);
+    calcBtn.addEventListener('click', handleCalcBtnClick);
+    contactBtn.addEventListener('click', handleContactUsClick);
 
     var options = {
       width: "100%",
@@ -692,6 +733,13 @@
       chartArea: {width: "90%", left: "100", top: 50, bottom: "50"},
       vAxis: {
         format: "decimal",
+        title: 'Cost Savings',
+        textStyle: {
+          color: '#000000',
+          fontStyle: 'normal',
+          fontName: "Lato",
+          fontSize: 20,
+        },
         gridlines: {
           color: "#EDE7ED",
         },
@@ -705,6 +753,15 @@
         minValue: 0,
         textStyle: {fontSize: 20}
       },
+      hAxis: {
+        title: 'Year',
+        textStyle: {
+          fontSize: 12,
+          fontName: "Lato",
+          color: '#000000',
+          fontStyle: 'normal',
+        }
+      },
       curveType: "function",
     };
 
@@ -712,12 +769,31 @@
       width: "100%",
       height: "100%",
       titleTextStyle: { color: '#000' },
-      chartArea: {width: "90%", left: "100", top: 50, bottom: "50"},
+      chartArea: {width: "90%", left: "120", top: 50, bottom: "50"},
       fontSize: 20,
       tooltip: {isHtml: true},
       fontName: 'Lato',
       bar: {groupWidth: "95%"},
       legend: { position: "none" },
+      vAxis: {
+        format: "decimal",
+        title: 'Cost Savings',
+        textStyle: {
+          color: '#000000',
+          fontStyle: 'normal',
+          fontName: "Lato",
+          fontSize: 20,
+        },
+      },
+      hAxis: {
+        title: 'Year',
+        textStyle: {
+          fontSize: 12,
+          fontName: "Lato",
+          color: '#000000',
+          fontStyle: 'normal',
+        }
+      },
     }
 
     google.charts.load('current', {'packages':['corechart']});

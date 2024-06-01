@@ -5,6 +5,9 @@
     var modal = document.querySelector(".content-modal");
     var modalCloseBtn = document.querySelector(".close-button");
     var backdrop = document.querySelector(".content-modal .backdrop");
+    var marketoFormPopup = document.querySelector('.popup_form.demo');
+    var contactBtn = document.querySelector('.calculator-action-wrapper .contact-btn');
+    var calcBtn = document.querySelector('#calc-btn');
     var userInputValue = "";
 
     var amdCost = 0;
@@ -84,14 +87,14 @@
     var ultraDiskPrCapacity = 0;
 
 
-    var totalCostHtmlField = document.getElementById("total-cost");
     var tibInput = document.getElementById("tib-input");
 
     var options = {
       width: "100%",
       height: "100%",
       tooltip: {
-        isHtml: true
+        isHtml: true,
+        trigger: 'both' ,
       },
       legend: {
         position: "none"
@@ -103,7 +106,15 @@
       fontSize: 20,
       chartArea: {width: "90%", left: "140", top: 50, bottom: "50"},
       vAxis: {
+        // label: 'Total Cost',
         format: "decimal",
+        title: 'Cost Savings',
+        textStyle: {
+          color: '#000000',
+          fontStyle: 'normal',
+          fontName: "Lato",
+          fontSize: 20,
+        },
         gridlines: {
           color: "#EDE7ED",
         },
@@ -116,6 +127,15 @@
         baselineColor: "#EDE7ED",
         minValue: 0,
         textStyle: {fontSize: 20}
+      },
+      hAxis: {
+        title: 'Year',
+        textStyle: {
+          fontSize: 12,
+          fontName: "Lato",
+          color: '#000000',
+          fontStyle: 'normal',
+        }
       },
       curveType: "function",
     };
@@ -681,6 +701,7 @@
       alterChartOptionsOnResize();
       
       chart.draw(data, options);
+      chart.setSelection([{row:4, column:4}]);
 
       return;
     }
@@ -730,8 +751,18 @@
           behavior: 'smooth'
       });
     }
+
+    function handleContactUsClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (marketoFormPopup) {
+        marketoFormPopup.classList.add('active');
+      }
+    }
     
-    document.querySelector('#calc-btn').addEventListener('click', handleCalcBtnClick);
+    calcBtn.addEventListener('click', handleCalcBtnClick);
+    contactBtn.addEventListener('click', handleContactUsClick);
 
     keyPointsBtn.addEventListener("click", handleKeyPointBtnClick);
     modalCloseBtn.addEventListener("click", handleModalClose);

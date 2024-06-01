@@ -16,7 +16,6 @@
     * {
       box-sizing: border-box;
       margin: 0;
-      font-size: 62.5%;
     }
 
     html {
@@ -511,6 +510,7 @@
 
     #line-graph svg text {
       font-size: 12px !important;
+      font-style: normal;
     }
 
     #line-graph>div {
@@ -801,9 +801,9 @@
                         placeholder="100" maxlength="9" />
                     </div>
                     <div class="btn-wrap">
-                      <span class="btn-new btn-new-default">
+                      <a href="#calc-result" class="btn-new btn-new-default" id="calc-btn">
                         Calculate
-                      </span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -812,7 +812,7 @@
           </div>
         </div>
       </div>
-      <div class="calculation-result-wrapper">
+      <div class="calculation-result-wrapper" id="calc-result">
         <div class="container">
           <div class="row">
             <div class="col-six">
@@ -841,7 +841,7 @@
       <div class="calculator-action-wrapper">
         <div class="container">
           <div class="button-wrapper">
-            <a href="/contact-us" class="btn-new btn-new-default">Contact Sales</a>
+            <a href="javascript:void(0)" class="btn-new btn-new-default contact-btn">Contact Sales</a>
             <a href="/" class="btn-link-yellow" id="key-points">View Key Assumptions <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="28" viewBox="0 0 27 28" fill="none">
                   <g clip-path="url(#clip0_103_13)">
@@ -988,18 +988,16 @@
             <div class="content-inner">
               <h3>Key Assumptions</h3>
               <ul>
-                <li><strong>Data Reduction:</strong> 3:1: AchieveN through compression, thin provisioning with
-                  auto-scaling,
-                  space-efficient snapshots, anN clonesM</li>
-                <li><strong>Highly Available w/ 2 replicas:</strong> Ensures high availability of Nata with two
-                  replicasM</li>
-                <li><strong>Azure VMs:</strong> ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in
-                  the EastUS regionM
+                <li><strong>Data Reduction:</strong> 3:1 data reduction ratio through compression, thin provisioning with auto-scaling, and space-efficient snapshots and clones.</li>
+                <li><strong>Availability:</strong> EHighly available with 3 replicas for data redundancy.</li>
+                <li><strong>Azure VMs:</strong> Reserved for 3 years in EastUS region.
                 </li>
-                <li><strong>Annual Expected Growth:</strong> Accounts for a projecteN annual growth rate of 15%M</li>
-                <li><strong>LRS Azure:</strong> Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
-                <li><strong>Premium SSD v2 Assumptions:</strong> Assumes 15K IOPS per TB anN 2KBs per each IO for
-                  Premium SSD v2.</li>
+                <li><strong>Annual Expected Growth:</strong> Accounts for a projected annual growth rate of 15%.</li>
+                <li><strong>LRS Azure:</strong> Leveraging LRS Azure storage for durability and reliability.</li>
+                <li>Comparison made against Azure VMware Solution configurations AV36P and AV64 for common use-cases.</li>
+                <li>Selection of AV36P and AV64 configurations for balanced compute and storage resources.</li>
+                <li>Both configurations feature Dual Intel Xeon processors with varying core counts and clock speeds.</li>
+                <li>AV36P emphasizes faster NVMe storage, while AV64 offers larger NVMe storage capacity.</li>
               </ul>
             </div>
           </div>

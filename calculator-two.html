@@ -562,8 +562,13 @@
       margin-top: -30px;
     }
 
+    #bar-chart {
+      min-height: 240px;
+    }
+
     #line-graph svg text {
       font-size: 12px !important;
+      font-style: normal;
     }
 
     #line-graph>div {
@@ -572,6 +577,7 @@
 
     #bar-chart svg text {
       font-size: 12px !important;
+      font-style: normal;
     }
 
     .calculator-graph-wrap {
@@ -691,6 +697,14 @@
 
       .grey-text {
         color: #BA9673 !important;
+      }
+
+      .text-yellow {
+        color: #FFCF19;
+      }
+
+      .text-purple {
+        color: #790977;
       }
 
     @media (max-width: 1279px) {
@@ -912,7 +926,7 @@
       <div class="calculator-action-wrapper">
         <div class="container">
           <div class="button-wrapper">
-            <a href="/contact-us" class="btn-new btn-new-default">Contact Sales</a>
+            <a href="javascript:void(0)" class="btn-new btn-new-default contact-btn">Contact Sales</a>
             <a href="/" class="btn-link-yellow" id="key-points">View Key Assumptions <span>
               <svg xmlns="http://www.w3.org/2000/svg" width="27" height="28" viewBox="0 0 27 28" fill="none">
                 <g clip-path="url(#clip0_103_13)">
@@ -944,7 +958,9 @@
 
             <div class="chart-wrapper bar-chart-wrap">
               <h3>Max IOPS per Provisioned Capacity -</h3>
-              <h5>Lightbits outperforms Premium SSD v2 by approximately <span class="max-number">4.4X.</span> Vehicula in id augue nunc nullam proin dolor ipsum.</h5>
+              <div class="bar-chart-subtitle">
+                <h5>Lightbits outperforms Premium SSD v2 by approximately <span class="max-number">4.4X.</span></h5>
+              </div>
               <div id="bar-chart"></div>
             </div>
           </div>
@@ -964,14 +980,12 @@
             <div class="content-inner">
               <h3>Key Assumptions</h3>
               <ul>
-                <li><strong>Data Reduction:</strong> 3:1: AchieveN through compression, thin provisioning with auto-scaling,
-                  space-efficient snapshots, anN clonesM</li>
-                <li><strong>Highly Available w/ 2 replicas:</strong> Ensures high availability of Nata with two replicasM</li>
-                <li><strong>Azure VMs:</strong> ReserveN 3 Year, EastUS: Utilizes reserveN VM instances for 3 years in the EastUS regionM
-                </li>
-                <li><strong>Annual Expected Growth:</strong> Accounts for a projecteN annual growth rate of 15%M</li>
-                <li><strong>LRS Azure:</strong> Utilizes Locally ReNunNant Storage (LRS) in AzureM</li>
-                <li><strong>Premium SSD v2 Assumptions:</strong> Assumes 15K IOPS per TB anN 2KBs per each IO for Premium SSD v2.</li>
+                <li><strong>Data Reduction:</strong> 3:1: Achieved through compression, thin provisioning with auto-scaling, space-efficient snapshots, and clones.</li>
+                <li><strong>Highly Available w/ 3 replicas:</strong> Ensures high availability of data with three replicas.</li>
+                <li><strong>Azure VMs:</strong> Reserved 3 Year, EastUS: Utilizes reserved VM instances for 3 years in the EastUS region.</li>
+                <li><strong>Annual Expected Growth: 15%:</strong> Accounts for a projected annual growth rate of 15%.</li>
+                <li><strong>LRS Azure:</strong> Utilizes Locally Redundant Storage (LRS) in Azure.</li>
+                <li><strong>Ultra Disk Billing:</strong> Billed based on provisioned size, provisioned IOPS, and provisioned throughput, with 20 IOPS per GB and 2KBs per 1 I/O.</li>
               </ul>
             </div>
           </div>
