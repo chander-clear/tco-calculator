@@ -563,7 +563,7 @@
     }
 
     #bar-chart {
-      min-height: 240px;
+      min-height: 450px;
     }
 
     #line-graph svg text {
@@ -598,7 +598,8 @@
         min-width: 200px;
       }
       .statistics__tooltip.bar-chart-tooltip {
-        top: -140px;
+        top: -100px;
+        left: -175px;
       }
       .statistics__tooltip p {
         font-size: 11px;
@@ -959,7 +960,7 @@
             <div class="chart-wrapper bar-chart-wrap">
               <h3>Max IOPS per Provisioned Capacity -</h3>
               <div class="bar-chart-subtitle">
-                <h5>Lightbits outperforms Premium SSD v2 by approximately <span class="max-number">4.4X.</span></h5>
+                <h5>Lightbits outperforms Premium SSD v2 by approximately <span class="max-number">0</span><span class="text-purple">x</span></h5>
               </div>
               <div id="bar-chart"></div>
             </div>
@@ -992,6 +993,29 @@
         </div>
       </div>
     </section>
+    <!-- <div class="popup_form contact">
+      <div class="poupform_content">
+        <a href="javascript:void(0)" class="close">x</a>
+        <p>
+          <script data-minify="1"
+            src="https://www.lightbitslabs.com/wp-content/cache/min/1/js/forms2/js/forms2.min.js?ver=1715344251"></script>
+        </p>
+        <script src="//lp.lightbitslabs.com/js/forms2/js/forms2.min.js"></script> <form id="mktoForm_1015"></form> <script>MktoForms2.loadForm("//lp.lightbitslabs.com", "971-BPG-505", 1015);</script>
+        <p>
+          <script>MktoForms2.loadForm("//lp.lightbitslabs.com", "971-BPG-505", 1017, function (form) {
+              form.onSuccess(function (values, followUpUrl) {
+                let p = form.getFormElem().parent()[0];
+                let successMessage = document.createElement('div');
+                successMessage.innerText = 'Thank you for your interest in Lightbits.';
+                successMessage.classList.add('marketo-form-success');
+                p.appendChild(successMessage);
+                form.getFormElem().hide();
+                return false;
+              });
+            });</script>
+        </p>
+      </div>
+    </div> -->
   </main>
   <script src="/calculator-two.js"></script>
 </body>

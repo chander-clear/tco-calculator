@@ -146,7 +146,6 @@
     window.addEventListener('load', printCharts);
 
     const buttons = document.querySelectorAll('.input-item.divider-bottom .form-group-input .btn-new');
-
    
     for (i = 0; i < buttons.length; i++) {
       var button = buttons[i];
@@ -604,10 +603,12 @@
     function drawBarChart() {
       var arrayValues = calculateCapacityAndGenerateData();
       var data = google.visualization.arrayToDataTable(arrayValues);
-      var chart = new google.visualization.BarChart(document.getElementById("bar-chart"));
+      var chart = new google.visualization.ColumnChart(document.getElementById("bar-chart"));
       alterBarChartOptionsOnResize();
 
       chart.draw(data, barOptions);
+
+      
 
       return;
     }
@@ -667,11 +668,11 @@
     }
 
     function updateDescriotion(type, performanceNum = 0) {
-      document.querySelector('.calculation-result-wrapper .calculation-number.no-padding').innerHTML = `<h5>Lightbits outperforms ${type} by approximately <span>${performanceNum}</span><span class="text-yellow">x</span></h5>`;
+      document.querySelector('.calculation-result-wrapper .calculation-number.no-padding').innerHTML = `<h5>Lightbits outperforms <strong>${type}</strong> by approximately <span>${performanceNum}</span><span class="text-yellow">x</span></h5>`;
     }
 
     function updateSubTitle(type, performanceNum = 0) {
-      document.querySelector('.bar-chart-subtitle').innerHTML = `<h5>Lightbits outperforms ${type} by approximately <span>${performanceNum}</span><span class="text-purple">x</span></h5>`;
+      document.querySelector('.bar-chart-subtitle').innerHTML = `<h5>Lightbits outperforms <strong>${type}</strong> by approximately <span>${performanceNum}</span><span class="text-purple">x</span></h5>`;
     } 
 
     function handleKeyPointBtnClick(e) {
@@ -720,7 +721,8 @@
       width: "100%",
       height: "100%",
       tooltip: {
-        isHtml: true
+        isHtml: true,
+        trigger: 'selection',
       },
       legend: {
         position: "none"
@@ -730,7 +732,7 @@
       colors: ["#BA9673", "#790977"],
       fontName: "Lato",
       fontSize: 20,
-      chartArea: {width: "90%", left: "100", top: 50, bottom: "50"},
+      chartArea: {width: "90%", left: "120", top: 50, bottom: "50"},
       vAxis: {
         format: "decimal",
         title: 'Cost Savings',
@@ -769,11 +771,14 @@
       width: "100%",
       height: "100%",
       titleTextStyle: { color: '#000' },
-      chartArea: {width: "90%", left: "120", top: 50, bottom: "50"},
+      chartArea: {width: "90%", left: "200", right: '100', top: 50, bottom: "50"},
       fontSize: 20,
-      tooltip: {isHtml: true},
+      tooltip: {
+        isHtml: true,
+        trigger: 'selection',
+      },
       fontName: 'Lato',
-      bar: {groupWidth: "95%"},
+      bar: {groupWidth: "35%"},
       legend: { position: "none" },
       vAxis: {
         format: "decimal",
@@ -784,6 +789,16 @@
           fontName: "Lato",
           fontSize: 20,
         },
+        gridlines: {
+          color: "#EDE7ED",
+        },
+        viewWindow: {
+          min:0
+        },
+        baselineColor: "#EDE7ED",
+        minorGridlines: {
+          color: "transparent",
+        },
       },
       hAxis: {
         title: 'Year',
@@ -793,6 +808,9 @@
           color: '#000000',
           fontStyle: 'normal',
         }
+      },
+      bar: {
+        groupWidth: '30%',
       },
     }
 
